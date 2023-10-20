@@ -106,6 +106,7 @@ CPU_Temp=46.0
 GPU=0.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
+
 True
 Host=192.168.3.100
 Memory=58.8       
@@ -114,6 +115,7 @@ CPU_Temp=41.0
 GPU=91.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
+
 True
 Host=192.168.3.100
 Memory=58.8       
@@ -122,6 +124,7 @@ CPU_Temp=49.0
 GPU=0.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
+
 True
 Host=192.168.3.100
 Memory=58.7       
@@ -130,6 +133,7 @@ CPU_Temp=43.0
 GPU=0.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
+
 True
 Host=192.168.3.100
 Memory=50.7       
@@ -138,6 +142,7 @@ CPU_Temp=40.0
 GPU=0.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
+
     True
     Host=192.168.3.100
     Memory=50.6       
@@ -146,6 +151,7 @@ HDD_Temp=33.0
     GPU=0.0
     GPU_Temp=41.0     
     HDD_Temp=33.0     
+
 True
 Host=192.168.3.100
 Memory=50.6
