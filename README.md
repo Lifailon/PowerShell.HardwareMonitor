@@ -6,7 +6,7 @@ This module is convenient to use to quickly get the status of sensors on a remot
 
 ## 🚀 Install
 
-1. Download software **[Open Hardware Monitor](https://openhardwaremonitor.org)**:
+1. Download software **[Open Hardware Monitor](https://openhardwaremonitor.org)** on the server side:
 
 ```PowerShell
 $zip = "$home\Documents\ohm.zip"
