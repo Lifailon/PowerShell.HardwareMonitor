@@ -29,10 +29,10 @@ PS C:\Users\lifailon\Desktop> Import-Module .\Get-Sensor.psm1
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server localhost
 
 Server        : localhost
-CPU           : 12th Gen Intel Core i7-1260P
 MEM_Used_Proc : 65,4 %
 MEM_Used      : 10,3 GB
 MEM_Available : 5,4 GB
+CPU           : 12th Gen Intel Core i7-1260P
 CPU_Load      : 5,4 %
 CPU_Temp      : 
 GPU           : 
@@ -52,10 +52,10 @@ Temperature sensors are not supported in modern models, this has been seen on la
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server 192.168.3.100
 
 Server        : 192.168.3.100
-CPU           : Intel Core i5-10400
 MEM_Used_Proc : 49,6 %
 MEM_Used      : 15,8 GB
 MEM_Available : 16,1 GB
+CPU           : Intel Core i5-10400
 CPU_Load      : 2,7 %
 CPU_Temp      : 26,0 °C
 GPU           : Radeon RX 570 Series
