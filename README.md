@@ -15,7 +15,8 @@ Expand-Archive -Path $zip -DestinationPath $path
 
 2. Run the server:
 
-Run **OpenHardwareMonitor.exe** and Options -> Remote Web Server -> **Run**.
+Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. \
+Port default: 8085.
 
 3. Check connection
 
@@ -23,7 +24,7 @@ On the client side (this can be locally) check the module operation:
 
 ```PowerShell
 Import-Module .\Get-Sensor.psm1
-Get-Sensor -Server 192.168.3.100
+Get-Sensor -Server 192.168.3.100 -Port 8085
 ```
 
 ## Example
