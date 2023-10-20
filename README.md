@@ -2,6 +2,30 @@
 
 Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database
 
+## Install
+
+1. Download software **[Open Hardware Monitor](https://openhardwaremonitor.org)**:
+
+```PowerShell
+$zip = "$home\Documents\ohm.zip"
+Invoke-RestMethod https://openhardwaremonitor.org/files/openhardwaremonitor-v0.9.6.zip -OutFile $path
+$path = $zip -replace ".zip"
+Expand-Archive -Path $zip -DestinationPath $path
+```
+
+2. Run the server:
+
+Run **OpenHardwareMonitor.exe** and Options -> Remote Web Server -> **Run**.
+
+3. Check connection
+
+On the client side (this can be locally) check the module operation:
+
+```PowerShell
+Import-Module .\Get-Sensor.psm1
+Get-Sensor -Server 192.168.3.100
+```
+
 ## Example
 
 ```PowerShell
