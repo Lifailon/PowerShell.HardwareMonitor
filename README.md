@@ -138,14 +138,14 @@ CPU_Temp=40.0
 GPU=0.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
-True
-**Host=192.168.3.100**
-**Memory=50.6       **
-**CPU=6.0**
-**CPU_Temp=35.0     **
-**GPU=0.0**
-**GPU_Temp=41.0     **
-**HDD_Temp=33.0     **
+    True
+    Host=192.168.3.100
+    Memory=50.6       
+    CPU=6.0
+    CPU_Temp=35.0     
+    GPU=0.0
+    GPU_Temp=41.0     
+    HDD_Temp=33.0     
 True
 Host=192.168.3.100
 Memory=50.6
