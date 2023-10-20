@@ -98,42 +98,7 @@ PS C:\Users\lifailon\Desktop> while ($True) {
 >>     Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB -Log
 >>     Start-Sleep -Seconds 5
 >> }
-True
-Host=192.168.3.100
-Memory=58.8       
-CPU=76.7
-CPU_Temp=46.0     
-GPU=0.0
-GPU_Temp=42.0     
-HDD_Temp=33.0     
-
-True
-Host=192.168.3.100
-Memory=58.8       
-CPU=68.6
-CPU_Temp=41.0     
-GPU=91.0
-GPU_Temp=42.0     
-HDD_Temp=33.0     
-
-True
-Host=192.168.3.100
-Memory=58.8       
-CPU=80.6
-CPU_Temp=49.0     
-GPU=0.0
-GPU_Temp=42.0     
-HDD_Temp=33.0     
-
-True
-Host=192.168.3.100
-Memory=58.7       
-CPU=78.9
-CPU_Temp=43.0     
-GPU=0.0
-GPU_Temp=42.0     
-HDD_Temp=33.0     
-
+...
 True
 Host=192.168.3.100
 Memory=50.7       
@@ -143,14 +108,14 @@ GPU=0.0
 GPU_Temp=42.0     
 HDD_Temp=33.0     
 
-    True
-    Host=192.168.3.100
-    Memory=50.6       
-    CPU=6.0
-    CPU_Temp=35.0     
-    GPU=0.0
-    GPU_Temp=41.0     
-    HDD_Temp=33.0     
+True
+Host=192.168.3.100
+Memory=50.6       
+CPU=6.0
+CPU_Temp=35.0     
+GPU=0.0
+GPU_Temp=41.0     
+HDD_Temp=33.0     
 
 True
 Host=192.168.3.100
@@ -160,4 +125,5 @@ CPU_Temp=35.0
 GPU=0.0
 GPU_Temp=42.0
 HDD_Temp=33.0
+...
 ```
