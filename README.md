@@ -52,7 +52,7 @@ HDD_Temp      :
 
 😟 Temperature sensors are not supported in modern models for lack of support, this has been seen on multiple laptops.
 
-## 📑 Example
+## 📑 Remote workstation
 
 ```PowerShell
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server 192.168.3.100
@@ -91,3 +91,67 @@ while ($True) {
 
 This design is suitable for continuously sending data to a database with the possibility of **creating a service**. With **Start-Sleep** you can set the frequency of sending messages. Using the **Server, Port, Database and Table parameters to module**, you can specify the settings for connecting to the database. The **Log parameter** is used to debug the output.
 
+## Example
+
+```PowerShell
+PS C:\Users\lifailon\Desktop> while ($True) {
+>>     Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB -Log
+>>     Start-Sleep -Seconds 5
+>> }
+True
+Host=192.168.3.100
+Memory=58.8       
+CPU=76.7
+CPU_Temp=46.0     
+GPU=0.0
+GPU_Temp=42.0     
+HDD_Temp=33.0     
+True
+Host=192.168.3.100
+Memory=58.8       
+CPU=68.6
+CPU_Temp=41.0     
+GPU=91.0
+GPU_Temp=42.0     
+HDD_Temp=33.0     
+True
+Host=192.168.3.100
+Memory=58.8       
+CPU=80.6
+CPU_Temp=49.0     
+GPU=0.0
+GPU_Temp=42.0     
+HDD_Temp=33.0     
+True
+Host=192.168.3.100
+Memory=58.7       
+CPU=78.9
+CPU_Temp=43.0     
+GPU=0.0
+GPU_Temp=42.0     
+HDD_Temp=33.0     
+True
+Host=192.168.3.100
+Memory=50.7       
+CPU=7.7
+CPU_Temp=40.0     
+GPU=0.0
+GPU_Temp=42.0     
+HDD_Temp=33.0     
+True
+**Host=192.168.3.100**
+**Memory=50.6       **
+**CPU=6.0**
+**CPU_Temp=35.0     **
+**GPU=0.0**
+**GPU_Temp=41.0     **
+**HDD_Temp=33.0     **
+True
+Host=192.168.3.100
+Memory=50.6
+CPU=2.1
+CPU_Temp=35.0
+GPU=0.0
+GPU_Temp=42.0
+HDD_Temp=33.0
+```
