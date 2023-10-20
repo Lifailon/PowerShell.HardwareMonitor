@@ -132,7 +132,7 @@ HDD_Temp=33.0
 
 **Data visualization in InfluxDB Studio:**
 
-![Image alt](https://github.com/Lifailon/SensorsToInfluxDB/blob/rsa/Screen/InfluxDB-Data.jpg)
+![Image alt](https://github.com/Lifailon/SensorsToInfluxDB/blob/rsa/InfluxDB-Data.jpg)
 
 ### 📈 Grafana
 
