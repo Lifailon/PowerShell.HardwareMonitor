@@ -75,4 +75,18 @@ HDD_Temp      : 33,0 °C
 
 ## 📊 Send metrics to the database
 
+Get help with the **Send-ToInfluxDB** cmdlet:
 
+```PowerShell
+PS C:\Users\lifailon\Desktop> (Get-Help Send-ToInfluxDB).Description
+
+Use this construct to create a service:
+Use this construct to create a service:
+while ($True) {
+    Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB
+    Start-Sleep -Seconds 5
+}
+
+```
+
+This design is suitable for continuously sending data to a database with the possibility of **creating a service**.
