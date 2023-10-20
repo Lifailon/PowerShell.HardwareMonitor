@@ -80,7 +80,8 @@ Get help with the **Send-ToInfluxDB** cmdlet:
 ```PowerShell
 PS C:\Users\lifailon\Desktop> (Get-Help Send-ToInfluxDB).Description
 
-Use this construct to create a service:
+Example:
+Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB -Log
 Use this construct to create a service:
 while ($True) {
     Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB
@@ -89,4 +90,5 @@ while ($True) {
 
 ```
 
-This design is suitable for continuously sending data to a database with the possibility of **creating a service**.
+This design is suitable for continuously sending data to a database with the possibility of **creating a service**. With **Start-Sleep** you can set the frequency of sending messages. Using the **Server, Port, Database and Table parameters to module**, you can specify the settings for connecting to the database. The **Log parameter** is used to debug the output.
+
