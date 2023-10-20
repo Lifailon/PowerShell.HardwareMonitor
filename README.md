@@ -1,4 +1,4 @@
-# SensorToInfluxDB
+# SensorsToInfluxDB
 
 Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database.
 
@@ -52,7 +52,7 @@ HDD_Temp      :
 
 😟 Temperature sensors are not supported in modern models for lack of support, this has been seen on multiple laptops.
 
-## 📑 Remote workstation
+## 📡 Remote workstation
 
 ```PowerShell
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server 192.168.3.100
@@ -91,7 +91,9 @@ while ($True) {
 
 This design is suitable for continuously sending data to a database with the possibility of **creating a service**. With **Start-Sleep** you can set the frequency of sending messages. Using the **Server, Port, Database and Table parameters to module**, you can specify the settings for connecting to the database. The **Log parameter** is used to debug the output.
 
-## Example
+## 📑 Example
+
+Output metrics to the console in **debug mode (-Log)**:
 
 ```PowerShell
 PS C:\Users\lifailon\Desktop> while ($True) {
@@ -127,3 +129,10 @@ GPU_Temp=42.0
 HDD_Temp=33.0
 ...
 ```
+
+**Data visualization in InfluxDB Studio:**
+
+![Image alt](https://github.com/Lifailon/SensorsToInfluxDB/blob/rsa/Screen/InfluxDB-Data.jpg)
+
+### 📈 Grafana
+
