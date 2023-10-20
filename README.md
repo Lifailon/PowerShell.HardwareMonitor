@@ -15,16 +15,23 @@ $path = $zip -replace ".zip"
 Expand-Archive -Path $zip -DestinationPath $path
 ```
 
-2. Run the server:
+2. **Run the server:**
 
 Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. Port default: **8085**.
 
-3. Install module
+3. **Install module**
 
 Use the following construction to quickly install the module:
 
 ```PowerShell
-$ModulePath = ($env:PSModulePath -split ";")[0]
+$path = $(($env:PSModulePath -split ";")[0]) + "\Get-Sensor"
+if (Test-Path $path) {
+    rm $path -Force -Recurse
+    mkdir $path
+} else {
+    mkdir $path
+}
+Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/SensorsToInfluxDB/rsa/Get-Sensor/Get-Sensor.psm1 -OutFile "$path\Get-Sensor.psm1"
 ```
 
 On the client side (this can be locally) check the module operation:
