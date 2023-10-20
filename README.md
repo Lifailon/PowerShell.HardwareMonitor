@@ -1,6 +1,6 @@
 # SensorsToInfluxDB
 
-Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database.
+Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database and visualization in Grafana.
 
 This module is convenient to use to quickly get the status of sensors on a remote computer, using only the PowerShell console at hand.
 
