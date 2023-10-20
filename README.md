@@ -1,8 +1,10 @@
 # SensorToInfluxDB
 
-Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database
+Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database.
 
-## Install
+This module is convenient to use to quickly get the status of sensors on a remote computer, using only the console at hand.
+
+## 🚀 Install
 
 1. Download software **[Open Hardware Monitor](https://openhardwaremonitor.org)**:
 
@@ -44,7 +46,7 @@ HDD_Temp      :
 
 Temperature sensors are not supported in modern models, this has been seen on laptops.
 
-## Example
+## 🔍 Example
 
 ```PowerShell
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server 192.168.3.100
