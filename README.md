@@ -17,8 +17,7 @@ Expand-Archive -Path $zip -DestinationPath $path
 
 2. Run the server:
 
-Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. \
-Port default: 8085.
+Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. Port default: **8085**.
 
 3. Import module
 
