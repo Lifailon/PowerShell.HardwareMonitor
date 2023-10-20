@@ -2,7 +2,7 @@
 
 Module for monitoring of load and temperature sensors via Open Hardware Monitor with sending to Influx database.
 
-This module is convenient to use to quickly get the status of sensors on a remote computer, using only the console at hand.
+This module is convenient to use to quickly get the status of sensors on a remote computer, using only the PowerShell console at hand.
 
 ## 🚀 Install
 
@@ -46,7 +46,7 @@ HDD_Temp      :
 
 Temperature sensors are not supported in modern models, this has been seen on laptops.
 
-## 🔍 Example
+## 📑 Example
 
 ```PowerShell
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server 192.168.3.100
