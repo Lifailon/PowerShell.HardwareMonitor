@@ -50,7 +50,7 @@ HDD_Load      : 41,9 %
 HDD_Temp      : 
 ```
 
-Temperature sensors are not supported in modern models, this has been seen on laptops.
+😟 Temperature sensors are not supported in modern models for lack of support, this has been seen on multiple laptops.
 
 ## 📑 Example
 
@@ -72,3 +72,7 @@ HDD           : {WDC WD2005FBYZ-01YCBB2, Generic Hard Disk}
 HDD_Load      : {89,2 %, 28,6 %}
 HDD_Temp      : 33,0 °C
 ```
+
+## 📊 Send metrics to the database
+
+
