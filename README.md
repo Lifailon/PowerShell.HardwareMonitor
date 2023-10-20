@@ -20,12 +20,19 @@ Expand-Archive -Path $zip -DestinationPath $path
 Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. \
 Port default: 8085.
 
-3. Check connection
+3. Import module
 
 On the client side (this can be locally) check the module operation:
 
 ```PowerShell
 PS C:\Users\lifailon\Desktop> Import-Module .\Get-Sensor.psm1
+PS C:\Users\lifailon\Desktop> Get-Command -Module Get-Sensor
+
+CommandType     Name                                               Version    Source    
+-----------     ----                                               -------    ------    
+Function        Get-Sensor                                         0.0        Get-Sensor
+Function        Send-ToInfluxDB                                    0.0        Get-Sensor
+
 PS C:\Users\lifailon\Desktop> Get-Sensor -Server localhost
 
 Server        : localhost
