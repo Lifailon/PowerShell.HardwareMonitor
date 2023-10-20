@@ -19,12 +19,18 @@ Expand-Archive -Path $zip -DestinationPath $path
 
 Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. Port default: **8085**.
 
-3. Import module
+3. Install module
+
+Use the following construction to quickly install the module:
+
+```PowerShell
+$ModulePath = ($env:PSModulePath -split ";")[0]
+```
 
 On the client side (this can be locally) check the module operation:
 
 ```PowerShell
-PS C:\Users\lifailon\Desktop> Import-Module .\Get-Sensor.psm1
+PS C:\Users\lifailon\Desktop> Import-Module Get-Sensor
 PS C:\Users\lifailon\Desktop> Get-Command -Module Get-Sensor
 
 CommandType     Name                                               Version    Source    
@@ -132,7 +138,7 @@ HDD_Temp=33.0
 
 **Data visualization in InfluxDB Studio:**
 
-![Image alt](https://github.com/Lifailon/SensorsToInfluxDB/blob/rsa/InfluxDB-Data.jpg)
+![Image alt](https://github.com/Lifailon/SensorsToInfluxDB/blob/rsa/Screen/InfluxDB-Data.jpg)
 
 ### 📈 Grafana
 
