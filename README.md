@@ -23,9 +23,26 @@ Port default: 8085.
 On the client side (this can be locally) check the module operation:
 
 ```PowerShell
-Import-Module .\Get-Sensor.psm1
-Get-Sensor -Server 192.168.3.100 -Port 8085
+PS C:\Users\lifailon\Desktop> Import-Module .\Get-Sensor.psm1
+PS C:\Users\lifailon\Desktop> Get-Sensor -Server localhost
+
+Server        : localhost
+CPU           : 12th Gen Intel Core i7-1260P
+MEM_Used_Proc : 65,4 %
+MEM_Used      : 10,3 GB
+MEM_Available : 5,4 GB
+CPU_Load      : 5,4 %
+CPU_Temp      : 
+GPU           : 
+GPU_Load      : 
+GPU_Temp      : 
+GPU_Fan       : 
+HDD           : Generic Hard Disk
+HDD_Load      : 41,9 %
+HDD_Temp      : 
 ```
+
+Temperature sensors are not supported in modern models, this has been seen on laptops.
 
 ## Example
 
