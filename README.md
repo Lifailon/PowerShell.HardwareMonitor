@@ -6,7 +6,7 @@ This module is convenient to use to quickly get the status of sensors on a remot
 
 ## 🚀 Install
 
-1. Download software **[Open Hardware Monitor](https://openhardwaremonitor.org)** on the server side:
+1. **Download software [Open Hardware Monitor](https://openhardwaremonitor.org) on the server side:**
 
 ```PowerShell
 $zip = "$home\Documents\ohm.zip"
@@ -17,9 +17,11 @@ Expand-Archive -Path $zip -DestinationPath $path
 
 2. **Run the server:**
 
-Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**. Port default: **8085**.
+Run **OpenHardwareMonitor.exe** and click Options -> Remote Web Server -> **Run**.
 
-3. **Install module**
+Port default: **8085** (configured in the section: Options -> Remote Web Server -> **Port**)
+
+3. **Install module:**
 
 Use the following construction to quickly install the module:
 
@@ -33,6 +35,8 @@ if (Test-Path $path) {
 }
 Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/SensorsToInfluxDB/rsa/Get-Sensor/Get-Sensor.psm1 -OutFile "$path\Get-Sensor.psm1"
 ```
+
+4. **Server connection:**
 
 On the client side (this can be locally) check the module operation:
 
