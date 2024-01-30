@@ -7,9 +7,13 @@ function Get-Sensor {
     The module realizes all ways of obtaining information: .NET library, CIM (Common Information Model) and REST API.
     Response speed through CIM is on average 5 times faster (200 milliseconds vs. 1 second) because a running instance of the application is used to read.
     .DESCRIPTION
-    Example:
+    Default:
     Get-Sensor -Path "$home\Documents\OpenHardwareMonitor\OpenHardwareMonitor"
     Get-Sensor -Libre -Path "$home\Documents\LibreHardwareMonitor"
+    Example:
+    Get-Sensor 
+    Get-Sensor -Libre
+    Get-Sensor -Libre -CIM
     Get-Sensor -Server 192.168.3.100
     Get-Sensor -Server 192.168.3.100 - Port 8085
     Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB
@@ -35,43 +39,28 @@ function Get-Sensor {
     }
     ### REST API
     if ($null -ne $Server) {
-        $irm         = Invoke-RestMethod "http://$($Server):$($Port)/data.json"
-        $Sensors     = $irm.Children.Children
-        $CPU         = $Sensors | Where-Object ImageURL -Match cpu
-        $CPU_Name    = $CPU.Text
-        $CPU_Temp    = $CPU.Children | Where-Object Text -Like Temperatures
-        $GPU         = $Sensors | Where-Object ImageURL -Match ati
-        $GPU_Name    = $GPU.Text
-        $GPU_Load    = $GPU.Children | Where-Object Text -Like Load
-        $GPU_Temp    = $GPU.Children | Where-Object Text -Like Temperatures
-        $GPU_Fan     = $GPU.Children | Where-Object Text -Like Fans
-        $HDD         = $Sensors | Where-Object ImageURL -Match hdd
-        $HDD_Name    = $HDD.Text
-        $HDD_Load    = $HDD.Children | Where-Object Text -Like Load
-        $HDD_Temp    = $HDD.Children | Where-Object Text -Like Temperatures
+        $Data = Invoke-RestMethod "http://$($Server):$($Port)/data.json"
         $Collections = New-Object System.Collections.Generic.List[System.Object]
-        $Collections.Add([PSCustomObject]@{
-            Server = $Server;
-            MEM_Used_Proc = ($Sensors.Children.Children | Where-Object Text -eq "Memory").Value;
-            MEM_Used      = ($Sensors.Children.Children | Where-Object Text -eq "Used Memory").Value;
-            MEM_Available = ($Sensors.Children.Children | Where-Object Text -eq "Available Memory").Value;
-            CPU           = $CPU_Name;
-            CPU_Load      = ($Sensors.Children.Children | Where-Object Text -eq "CPU Total").Value;
-            CPU_Temp      = ($CPU_Temp.Children | Where-Object Text -eq "CPU Package").Value;
-            GPU           = $GPU_Name;
-            GPU_Load      = ($GPU_Load.Children | Where-Object Text -eq "GPU Core").Value;
-            GPU_Temp      = ($GPU_Temp.Children | Where-Object Text -eq "GPU Core").Value;
-            GPU_Fan       = ($GPU_Fan.Children | Where-Object Text -eq "GPU Fan").Value;
-            HDD           = $HDD_Name;
-            HDD_Load      = ($HDD_Load.Children | Where-Object Text -eq "Used Space").Value;
-            HDD_Temp      = ($HDD_Temp.Children | Where-Object Text -eq "Temperature").Value
-        })
-        return $Collections
+        foreach ($Hardware in $($Data.Children.Children)) {
+            $HardwareName = $Hardware.Text
+            foreach ($Sensor in $($Hardware.Children)) {
+                $SensorName = $Sensor.Text
+                foreach ($SensorChildren in $($Sensor.Children)) {
+                    $Collections.Add([PSCustomObject]@{
+                        HardwareName = $HardwareName
+                        SensorName = $SensorName
+                        SensorType = $SensorChildren.Text
+                        Value = $SensorChildren.Value
+                        Min = $SensorChildren.Min
+                        Max = $SensorChildren.Max
+                    })
+                }
+            }
+        }
+        $Collections
     }
     ### LibreHardwareMonitor via .NET library
     elseif (($Libre -eq $True) -and ($CIM -eq $False)) {
-        # Удалить путь
-        $path = "$home\Documents\LibreHardwareMonitor"
         Add-Type -Path "$path\LibreHardwareMonitorLib.dll"
         $Computer = New-Object -TypeName LibreHardwareMonitor.Hardware.Computer
         $Computer.IsCpuEnabled         = $true
