@@ -10,7 +10,8 @@ function Get-Sensor {
     Get-Sensor -Libre
     Get-Sensor -Libre -Path "$home\Documents\LibreHardwareMonitor"
     Get-Sensor -Libre -CIM
-    Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
+    Get-Sensor -Libre | Where-Object Value -ne 0 | Format-Table
+    Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "^0,0" | Format-Table
     Get-Sensor -Server 192.168.3.99 -Port 8085
     .LINK
     https://github.com/Lifailon/PowerShellHardwareMonitor

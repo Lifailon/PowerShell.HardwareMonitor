@@ -6,15 +6,15 @@ This module implements an out-of-the-box and universal solution for configuring 
 
 🔗 Implemented ways to get information:
 
-✅ REST API
-✅ .NET Library
+✅ REST API \
+✅ .NET Library \
 ✅ CIM (Common Information Model)
 
 > Response speed through CIM is on average 5 times faster (200 milliseconds vs. 1 second) because a running instance of the application is used to retrieve the data, which stores the minimum and maximum values.
 
 - [🚀 Install](#-install)
 - [📑 Get data](#-get-data)
-- [📊 Monitoring](#-monitoring)
+- [📊 Monitoring settings](#-monitoring-settings)
 
 ## 🚀 Install
 
@@ -62,7 +62,7 @@ Difference in the amount of data (non-empty) for **HUAWEI MateBook X Pro laptop*
 ### REST API via OpenHardwareMonitor
 
 ```PowerShell
-> Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
+> Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "^0,0" | Format-Table
 
 HardwareName                 SensorName SensorType       Value   Min     Max
 ------------                 ---------- ----------       -----   ---     ---
@@ -87,7 +87,7 @@ Generic Hard Disk            Load       Used Space       51,7 %  51,7 %  51,7 %
 ### REST API via LibreHardwareMonitor
 
 ```PowerShell
-> Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
+> Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "^0,0" | Format-Table
 
 HardwareName                  SensorName   SensorType                     Value      Min       Max
 ------------                  ----------   ----------                     -----      ---       ---
@@ -198,165 +198,84 @@ HB5781P1EEW-31T               Capacities   Remaining Capacity             20813 
 > 💡 Administrator rights are required to run
 
 ```PowerShell
-> Get-Sensor -Libre | Format-Table
+> Get-Sensor -Libre | Where-Object Value -ne 0 | Format-Table
 
-HardwareName                      SensorName                     SensorType     Value  Min  Max
-------------                      ----------                     ----------     -----  ---  ---
-12th Gen Intel Core i7-1260P      Bus Speed                      Clock 0          100  100  100
-12th Gen Intel Core i7-1260P      CPU Core #1                    Clock 1         3794 3794 3794
-12th Gen Intel Core i7-1260P      CPU Core #10                   Clock 10        3195 3195 3195
-12th Gen Intel Core i7-1260P      CPU Core #11                   Clock 11        3395 3395 3395
-12th Gen Intel Core i7-1260P      CPU Core #12                   Clock 12        3195 3195 3195
-12th Gen Intel Core i7-1260P      CPU Core #2                    Clock 2         3694 3694 3694
-12th Gen Intel Core i7-1260P      CPU Core #3                    Clock 3         3694 3694 3694
-12th Gen Intel Core i7-1260P      CPU Core #4                    Clock 4         3794 3794 3794
-12th Gen Intel Core i7-1260P      CPU Core #5                    Clock 5         3195 3195 3195
-12th Gen Intel Core i7-1260P      CPU Core #6                    Clock 6         2896 2896 2896
-12th Gen Intel Core i7-1260P      CPU Core #7                    Clock 7         2896 2896 2896
-12th Gen Intel Core i7-1260P      CPU Core #8                    Clock 8         2995 2995 2995
-12th Gen Intel Core i7-1260P      CPU Core #9                    Clock 9         2995 2995 2995
-12th Gen Intel Core i7-1260P      CPU Total                      Load 0            10   10   10
-12th Gen Intel Core i7-1260P      CPU Core Max                   Load 1            92   92   92
-12th Gen Intel Core i7-1260P      CPU Core #5                    Load 10            0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #6                    Load 11            0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #7                    Load 12           36   36   36
-12th Gen Intel Core i7-1260P      CPU Core #8                    Load 13           18   18   18
-12th Gen Intel Core i7-1260P      CPU Core #9                    Load 14            0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #10                   Load 15           51   51   51
-12th Gen Intel Core i7-1260P      CPU Core #11                   Load 16           38   38   38
-12th Gen Intel Core i7-1260P      CPU Core #12                   Load 17            0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #1 Thread #1          Load 2            92   92   92
-12th Gen Intel Core i7-1260P      CPU Core #1 Thread #2          Load 3             0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #2 Thread #1          Load 4            14   14   14
-12th Gen Intel Core i7-1260P      CPU Core #2 Thread #2          Load 5             0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #3 Thread #1          Load 6            14   14   14
-12th Gen Intel Core i7-1260P      CPU Core #3 Thread #2          Load 7             0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #4 Thread #1          Load 8             0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #4 Thread #2          Load 9             0    0    0
-12th Gen Intel Core i7-1260P      CPU Package                    Power 0           20   20   20
-12th Gen Intel Core i7-1260P      CPU Cores                      Power 1           16   16   16
-12th Gen Intel Core i7-1260P      CPU Memory                     Power 3            0    0    0
-12th Gen Intel Core i7-1260P      CPU Core #1                    Temperature 0     77   77   77
-12th Gen Intel Core i7-1260P      CPU Core #2                    Temperature 1     69   69   69
-12th Gen Intel Core i7-1260P      CPU Core #11                   Temperature 10    69   69   69
-12th Gen Intel Core i7-1260P      CPU Core #12                   Temperature 11    75   75   75
-12th Gen Intel Core i7-1260P      CPU Package                    Temperature 12    75   75   75
-12th Gen Intel Core i7-1260P      CPU Core #1 Distance to TjMax  Temperature 13    23   23   23
-12th Gen Intel Core i7-1260P      CPU Core #2 Distance to TjMax  Temperature 14    31   31   31
-12th Gen Intel Core i7-1260P      CPU Core #3 Distance to TjMax  Temperature 15    26   26   26
-12th Gen Intel Core i7-1260P      CPU Core #4 Distance to TjMax  Temperature 16    32   32   32
-12th Gen Intel Core i7-1260P      CPU Core #5 Distance to TjMax  Temperature 17    28   28   28
-12th Gen Intel Core i7-1260P      CPU Core #6 Distance to TjMax  Temperature 18    28   28   28
-12th Gen Intel Core i7-1260P      CPU Core #7 Distance to TjMax  Temperature 19    28   28   28
-12th Gen Intel Core i7-1260P      CPU Core #3                    Temperature 2     74   74   74
-12th Gen Intel Core i7-1260P      CPU Core #8 Distance to TjMax  Temperature 20    28   28   28
-12th Gen Intel Core i7-1260P      CPU Core #9 Distance to TjMax  Temperature 21    31   31   31
-12th Gen Intel Core i7-1260P      CPU Core #10 Distance to TjMax Temperature 22    31   31   31
-12th Gen Intel Core i7-1260P      CPU Core #11 Distance to TjMax Temperature 23    31   31   31
-12th Gen Intel Core i7-1260P      CPU Core #12 Distance to TjMax Temperature 24    25   25   25
-12th Gen Intel Core i7-1260P      Core Max                       Temperature 25    77   77   77
-12th Gen Intel Core i7-1260P      Core Average                   Temperature 26    72   72   72
-12th Gen Intel Core i7-1260P      CPU Core #4                    Temperature 3     68   68   68
-12th Gen Intel Core i7-1260P      CPU Core #5                    Temperature 4     72   72   72
-12th Gen Intel Core i7-1260P      CPU Core #6                    Temperature 5     72   72   72
-12th Gen Intel Core i7-1260P      CPU Core #7                    Temperature 6     72   72   72
-12th Gen Intel Core i7-1260P      CPU Core #8                    Temperature 7     72   72   72
-12th Gen Intel Core i7-1260P      CPU Core #9                    Temperature 8     69   69   69
-12th Gen Intel Core i7-1260P      CPU Core #10                   Temperature 9     69   69   69
-12th Gen Intel Core i7-1260P      CPU Core                       Voltage 0          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #1                    Voltage 1          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #10                   Voltage 10         1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #11                   Voltage 11         1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #12                   Voltage 12         1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #2                    Voltage 2          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #3                    Voltage 3          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #4                    Voltage 4          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #5                    Voltage 5          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #6                    Voltage 6          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #7                    Voltage 7          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #8                    Voltage 8          1    1    1
-12th Gen Intel Core i7-1260P      CPU Core #9                    Voltage 9          1    1    1
-Беспроводная сеть                 Data Uploaded                  Data 2             0    0    0
-Беспроводная сеть                 Data Downloaded                Data 3             0    0    0
-Беспроводная сеть                 Network Utilization            Load 1             0    0    0
-Беспроводная сеть                 Upload Speed                   Throughput 7       0    0    0
-Беспроводная сеть                 Download Speed                 Throughput 8       0    0    0
-Подключение по локальной сети     Data Uploaded                  Data 2             0    0    0
-Подключение по локальной сети     Data Downloaded                Data 3             0    0    0
-Подключение по локальной сети     Network Utilization            Load 1             0    0    0
-Подключение по локальной сети     Upload Speed                   Throughput 7       0    0    0
-Подключение по локальной сети     Download Speed                 Throughput 8       0    0    0
-Подключение по локальной сети* 10 Data Uploaded                  Data 2             0    0    0
-Подключение по локальной сети* 10 Data Downloaded                Data 3             0    0    0
-Подключение по локальной сети* 10 Network Utilization            Load 1             0    0    0
-Подключение по локальной сети* 10 Upload Speed                   Throughput 7       0    0    0
-Подключение по локальной сети* 10 Download Speed                 Throughput 8       0    0    0
-Подключение по локальной сети* 9  Data Uploaded                  Data 2             0    0    0
-Подключение по локальной сети* 9  Data Downloaded                Data 3             0    0    0
-Подключение по локальной сети* 9  Network Utilization            Load 1             0    0    0
-Подключение по локальной сети* 9  Upload Speed                   Throughput 7       0    0    0
-Подключение по локальной сети* 9  Download Speed                 Throughput 8       0    0    0
-Сетевое подключение Bluetooth     Data Uploaded                  Data 2             0    0    0
-Сетевое подключение Bluetooth     Data Downloaded                Data 3             0    0    0
-Сетевое подключение Bluetooth     Network Utilization            Load 1             0    0    0
-Сетевое подключение Bluetooth     Upload Speed                   Throughput 7       0    0    0
-Сетевое подключение Bluetooth     Download Speed                 Throughput 8       0    0    0
-Generic Memory                    Memory Used                    Data 0             0    0    0
-Generic Memory                    Memory Available               Data 1             0    0    0
-Generic Memory                    Virtual Memory Used            Data 2             0    0    0
-Generic Memory                    Virtual Memory Available       Data 3             0    0    0
-Generic Memory                    Memory                         Load 0             0    0    0
-Generic Memory                    Virtual Memory                 Load 1             0    0    0
-HB5781P1EEW-31T                   Current                        Current 2          0    0    0
-HB5781P1EEW-31T                   Designed Capacity              Energy 3           0    0    0
-HB5781P1EEW-31T                   Full Charged Capacity          Energy 4           0    0    0
-HB5781P1EEW-31T                   Remaining Capacity             Energy 5           0    0    0
-HB5781P1EEW-31T                   Charge Level                   Level 0            0    0    0
-HB5781P1EEW-31T                   Degradation Level              Level 0            0    0    0
-HB5781P1EEW-31T                   Charge/Discharge Rate          Power 0            0    0    0
-HB5781P1EEW-31T                   Remaining Time (Estimated)     TimeSpan 0         0    0    0
-HB5781P1EEW-31T                   Voltage                        Voltage 1          0    0    0
-HotspotShield Network Adapter     Data Uploaded                  Data 2             0    0    0
-HotspotShield Network Adapter     Data Downloaded                Data 3             0    0    0
-HotspotShield Network Adapter     Network Utilization            Load 1             0    0    0
-HotspotShield Network Adapter     Upload Speed                   Throughput 7       0    0    0
-HotspotShield Network Adapter     Download Speed                 Throughput 8       0    0    0
-Intel(R) Iris(R) Xe Graphics      GPU Power                      Power 0            0    0    0
-ProtonVPN TUN                     Data Uploaded                  Data 2             0    0    0
-ProtonVPN TUN                     Data Downloaded                Data 3             0    0    0
-ProtonVPN TUN                     Network Utilization            Load 1             0    0    0
-ProtonVPN TUN                     Upload Speed                   Throughput 7       0    0    0
-ProtonVPN TUN                     Download Speed                 Throughput 8       0    0    0
-Radmin VPN                        Data Uploaded                  Data 2             0    0    0
-Radmin VPN                        Data Downloaded                Data 3             0    0    0
-Radmin VPN                        Network Utilization            Load 1             0    0    0
-Radmin VPN                        Upload Speed                   Throughput 7       0    0    0
-Radmin VPN                        Download Speed                 Throughput 8       0    0    0
-vEthernet (Default Switch)        Data Uploaded                  Data 2             0    0    0
-vEthernet (Default Switch)        Data Downloaded                Data 3             0    0    0
-vEthernet (Default Switch)        Network Utilization            Load 1             0    0    0
-vEthernet (Default Switch)        Upload Speed                   Throughput 7       0    0    0
-vEthernet (Default Switch)        Download Speed                 Throughput 8       0    0    0
-vEthernet (WSL)                   Data Uploaded                  Data 2             0    0    0
-vEthernet (WSL)                   Data Downloaded                Data 3             0    0    0
-vEthernet (WSL)                   Network Utilization            Load 1             0    0    0
-vEthernet (WSL)                   Upload Speed                   Throughput 7       0    0    0
-vEthernet (WSL)                   Download Speed                 Throughput 8       0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Data Read                      Data 4             0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Data Written                   Data 5             0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Available Spare                Level 1            0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Available Spare Threshold      Level 2            0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Percentage Used                Level 3            0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Used Space                     Load 0             0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Read Activity                  Load 31            0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Write Activity                 Load 32            0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Total Activity                 Load 33            0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Temperature                    Temperature 0      0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Temperature 1                  Temperature 6      0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Temperature 2                  Temperature 7      0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Read Rate                      Throughput 34      0    0    0
-WD PC SN740 SDDPNQD-1T00-1027     Write Rate                     Throughput 35      0    0    0
+HardwareName                 SensorName                     SensorType     Value  Min  Max
+------------                 ----------                     ----------     -----  ---  ---
+12th Gen Intel Core i7-1260P Bus Speed                      Clock 0          100  100  100
+12th Gen Intel Core i7-1260P CPU Core #1                    Clock 1         3495 3495 3495
+12th Gen Intel Core i7-1260P CPU Core #10                   Clock 10        2596 2596 2596
+12th Gen Intel Core i7-1260P CPU Core #11                   Clock 11        2596 2596 2596
+12th Gen Intel Core i7-1260P CPU Core #12                   Clock 12        2696 2696 2696
+12th Gen Intel Core i7-1260P CPU Core #2                    Clock 2         3594 3594 3594
+12th Gen Intel Core i7-1260P CPU Core #3                    Clock 3         3594 3594 3594
+12th Gen Intel Core i7-1260P CPU Core #4                    Clock 4         3594 3594 3594
+12th Gen Intel Core i7-1260P CPU Core #5                    Clock 5         2796 2796 2796
+12th Gen Intel Core i7-1260P CPU Core #6                    Clock 6         2796 2796 2796
+12th Gen Intel Core i7-1260P CPU Core #7                    Clock 7         2895 2895 2895
+12th Gen Intel Core i7-1260P CPU Core #8                    Clock 8         2895 2895 2895
+12th Gen Intel Core i7-1260P CPU Core #9                    Clock 9         2596 2596 2596
+12th Gen Intel Core i7-1260P CPU Total                      Load 0            31   31   31
+12th Gen Intel Core i7-1260P CPU Core Max                   Load 1            87   87   87
+12th Gen Intel Core i7-1260P CPU Core #5                    Load 10           34   34   34
+12th Gen Intel Core i7-1260P CPU Core #6                    Load 11           31   31   31
+12th Gen Intel Core i7-1260P CPU Core #7                    Load 12           37   37   37
+12th Gen Intel Core i7-1260P CPU Core #8                    Load 13           39   39   39
+12th Gen Intel Core i7-1260P CPU Core #9                    Load 14           32   32   32
+12th Gen Intel Core i7-1260P CPU Core #10                   Load 15           72   72   72
+12th Gen Intel Core i7-1260P CPU Core #11                   Load 16           24   24   24
+12th Gen Intel Core i7-1260P CPU Core #12                   Load 17           42   42   42
+12th Gen Intel Core i7-1260P CPU Core #1 Thread #1          Load 2            87   87   87
+12th Gen Intel Core i7-1260P CPU Core #1 Thread #2          Load 3             6    6    6
+12th Gen Intel Core i7-1260P CPU Core #2 Thread #1          Load 4            30   30   30
+12th Gen Intel Core i7-1260P CPU Core #2 Thread #2          Load 5            11   11   11
+12th Gen Intel Core i7-1260P CPU Core #3 Thread #1          Load 6            28   28   28
+12th Gen Intel Core i7-1260P CPU Core #4 Thread #1          Load 8            33   33   33
+12th Gen Intel Core i7-1260P CPU Package                    Power 0           18   18   18
+12th Gen Intel Core i7-1260P CPU Cores                      Power 1           13   13   13
+12th Gen Intel Core i7-1260P CPU Core #1                    Temperature 0     83   83   83
+12th Gen Intel Core i7-1260P CPU Core #2                    Temperature 1     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #11                   Temperature 10    81   81   81
+12th Gen Intel Core i7-1260P CPU Core #12                   Temperature 11    84   84   84
+12th Gen Intel Core i7-1260P CPU Package                    Temperature 12    84   84   84
+12th Gen Intel Core i7-1260P CPU Core #1 Distance to TjMax  Temperature 13    17   17   17
+12th Gen Intel Core i7-1260P CPU Core #2 Distance to TjMax  Temperature 14    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #3 Distance to TjMax  Temperature 15    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #4 Distance to TjMax  Temperature 16    23   23   23
+12th Gen Intel Core i7-1260P CPU Core #5 Distance to TjMax  Temperature 17    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #6 Distance to TjMax  Temperature 18    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #7 Distance to TjMax  Temperature 19    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #3                    Temperature 2     81   81   81
+12th Gen Intel Core i7-1260P CPU Core #8 Distance to TjMax  Temperature 20    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #9 Distance to TjMax  Temperature 21    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #10 Distance to TjMax Temperature 22    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #11 Distance to TjMax Temperature 23    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #12 Distance to TjMax Temperature 24    16   16   16
+12th Gen Intel Core i7-1260P Core Max                       Temperature 25    84   84   84
+12th Gen Intel Core i7-1260P Core Average                   Temperature 26    81   81   81
+12th Gen Intel Core i7-1260P CPU Core #4                    Temperature 3     77   77   77
+12th Gen Intel Core i7-1260P CPU Core #5                    Temperature 4     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #6                    Temperature 5     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #7                    Temperature 6     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #8                    Temperature 7     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #9                    Temperature 8     81   81   81
+12th Gen Intel Core i7-1260P CPU Core #10                   Temperature 9     81   81   81
+12th Gen Intel Core i7-1260P CPU Core                       Voltage 0          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #1                    Voltage 1          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #10                   Voltage 10         1    1    1
+12th Gen Intel Core i7-1260P CPU Core #11                   Voltage 11         1    1    1
+12th Gen Intel Core i7-1260P CPU Core #12                   Voltage 12         1    1    1
+12th Gen Intel Core i7-1260P CPU Core #2                    Voltage 2          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #3                    Voltage 3          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #4                    Voltage 4          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #5                    Voltage 5          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #6                    Voltage 6          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #7                    Voltage 7          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #8                    Voltage 8          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #9                    Voltage 9          1    1    1
 ```
+
+> On neither of my two systems has it worked to open the .NET library for OpenHardwareMonitor
 
 ### CIM (Common Information Model) via OpenHardwareMonitor
 
@@ -614,7 +533,7 @@ WDC WD2005FBYZ-01YCBB2        Read Rate                     Throughput 34       
 WDC WD2005FBYZ-01YCBB2        Write Rate                    Throughput 35        0       0 4379267
 ```
 
-## 📊 Monitoring
+## 📊 Monitoring settings
 
 Process configuring **temperature sensor monitoring**.
 
@@ -647,9 +566,11 @@ Create and start the service:
 
 ```
 
-- 3. Check the received data using InfluxDB Studio:
+- 3. Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):
 
+> In the example, the critical processor temperature is 99 degrees for the last 2 hours.
 
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/InfluxDB-Data.jpg)
 
 - 4. Install [Grafana Enterprise](https://grafana.com/grafana/download).
 
@@ -663,3 +584,14 @@ systemctl status grafana-server
 
 - 5. Dashboard settings for displaying graphs:
 
+The example shows the very same indicator that we have recorded in the database:
+
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/Grafana-Dashboard.jpg)
+
+First, filter the data by HardwareName and SensorType tags and set each request to a different name using GUI:
+
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/InfluxDB-Query.jpg)
+
+For clarity and convenience, customize the celsius and legends data type (displaying minimum, maximum, and average readings for the specified time period).
+
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/Grafana-Legend-Unit)
