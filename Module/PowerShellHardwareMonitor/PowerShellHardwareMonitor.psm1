@@ -5,16 +5,14 @@ function Get-Sensor {
     Module for local and remote data acquisition temperature, load and other sensors system via OpenHardwareMonitor and LibreHardwareMonitor
     Implemented ways to get information: REST API, .NET library and CIM (Common Information Model).
     .DESCRIPTION
-    Default:
-    Get-Sensor -Path "$home\Documents\OpenHardwareMonitor\OpenHardwareMonitor"
-    Get-Sensor -Libre -Path "$home\Documents\LibreHardwareMonitor"
     Example:
-    Get-Sensor 
+    Get-Sensor
+    Get-Sensor -Path "$home\Documents\OpenHardwareMonitor\OpenHardwareMonitor"
     Get-Sensor -Libre
+    Get-Sensor -Libre -Path "$home\Documents\LibreHardwareMonitor"
     Get-Sensor -Libre -CIM
-    Get-Sensor -Server 192.168.3.100
-    Get-Sensor -Server 192.168.3.100 - Port 8085
-    Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB
+    Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
+    Get-Sensor -Server 192.168.3.100 -Port 8085
     .LINK
     https://github.com/Lifailon/PowerShellHardwareMonitor
     https://github.com/openhardwaremonitor/openhardwaremonitor
@@ -88,22 +86,22 @@ function Get-Sensor {
     }
     ### OpenHardwareMonitor and LibreHardwareMonitor via CIM
     else {
-        $Process_Used = Get-Process OpenHardwareMonitor -ErrorAction Ignore
-        if ($null -eq $Process_Used) {
-            Start-Process "$path\OpenHardwareMonitor.exe" -WindowStyle Hidden # -NoNewWindow
-        }
         if ($Libre -eq $True) {
-            $Hardware = Get-CimInstance -Namespace "root/LibreHardwareMonitor" -ClassName Hardware | Select-Object Name,
-            HardwareType,
-            @{name = "Identifier";expression = {$_.Identifier -replace "\\|\?"}} # <<< Libre has a different parent ID from OpenHardwareMonitor
-            $Sensors = Get-CimInstance -Namespace "root/LibreHardwareMonitor" -ClassName Sensor 
+            $ProcessName = "LibreHardwareMonitor"
+            $NameSpace   = "root/LibreHardwareMonitor"
         }
         else {
-            $Hardware = Get-CimInstance -Namespace "root/OpenHardwareMonitor" -ClassName Hardware | Select-Object Name,
-            HardwareType,
-            Identifier
-            $Sensors = Get-CimInstance -Namespace "root/OpenHardwareMonitor" -ClassName Sensor 
+            $ProcessName = "OpenHardwareMonitor"
+            $NameSpace   = "root/OpenHardwareMonitor"
         }
+        $Process_Used = Get-Process $ProcessName -ErrorAction Ignore
+        if ($null -eq $Process_Used) {
+            Start-Process "$path\$($ProcessName).exe" -WindowStyle Hidden # -NoNewWindow
+        }
+        $Hardware = Get-CimInstance -Namespace $NameSpace -ClassName Hardware | Select-Object Name,
+        HardwareType,
+        @{name = "Identifier";expression = {$_.Identifier -replace "\\|\?"}} # <<< Libre has a different parent ID compared to OpenHardwareMonitor
+        $Sensors = Get-CimInstance -Namespace $NameSpace -ClassName Sensor 
         $Sensors = $Sensors | Select-Object @{
             name = "HardwareName"
             expression = {
@@ -142,7 +140,9 @@ function Send-TemperatureToInfluxDB {
         [int]$Port            = 8086,
         [string]$Database     = "PowerShell",
         [string]$Table        = "HardwareMonitor",
-        [switch]$Log
+        [switch]$LogConsole,
+        [switch]$LogWriteFile,
+        [string]$LogPath      = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor\influxdb.log"
     )
     $url = "http://$($ServerInflux):$($Port)/write?db=$Database"
     $TimeZone  = (Get-TimeZone).BaseUtcOffset.TotalMinutes
@@ -157,13 +157,12 @@ function Send-TemperatureToInfluxDB {
         $Value = $wd.Value -replace "\,","." -replace "\s.+"
         Invoke-RestMethod -Method POST -Uri $url -Body `
         "$Table,Host=$ComputerName,HardwareName=$HardwareName,SensorName=$SensorName,SensorType=$SensorType Value=$Value $TimeStamp" > $null
-        if ($Log) {
-            Write-Host "ComputerName=$ComputerName"
-            Write-Host "HardwareName=$HardwareName"
-            Write-Host "SensorName=$SensorName"
-            Write-Host "SensorType=$SensorType"
-            Write-Host "Value=$Value"
-            Write-Host
+        $LogText = "$(Get-Date)  $ComputerName  $HardwareName  $SensorName  $SensorType  $Value"
+        if ($LogConsole) {
+            Write-Host $LogText
+        }
+        elseif ($LogWriteFile) {
+            $LogText | Out-File $LogPath
         }
     }
 }
