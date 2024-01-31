@@ -570,7 +570,7 @@ Create and start the service:
 
 > In the example, the critical processor temperature is 99 degrees for the last 2 hours.
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/InfluxDB-Data.jpg)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Data.jpg)
 
 - 4. Install [Grafana Enterprise](https://grafana.com/grafana/download).
 
@@ -586,12 +586,12 @@ systemctl status grafana-server
 
 The example shows the very same indicator that we have recorded in the database:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/Grafana-Dashboard.jpg)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard.jpg)
 
 First, filter the data by HardwareName and SensorType tags and set each request to a different name using GUI:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/InfluxDB-Query.jpg)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Query.jpg)
 
 For clarity and convenience, customize the celsius and legends data type (displaying minimum, maximum, and average readings for the specified time period).
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Examples/Grafana-Legend-Unit)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Legend-Unit)
