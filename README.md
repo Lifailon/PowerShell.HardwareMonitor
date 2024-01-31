@@ -537,7 +537,7 @@ WDC WD2005FBYZ-01YCBB2        Write Rate                    Throughput 35       
 
 Process configuring **temperature sensor monitoring**.
 
-- 1. Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x in Ubuntu:
+- 1️⃣ Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x in Ubuntu:
 
 > Define the server on which the time series database will be installed (it can be WSL or a virtual machine).
 
@@ -548,7 +548,7 @@ systemctl start influxdb
 systemctl status influxdb
 ```
 
-- 2. Creating a Windows service to send sensors to the database.
+- 2️⃣ Creating a Windows service to send sensors to the database.
 
 > Pre-determine the source of data retrieval (REST, CIM or Library) and test it.
 
@@ -566,13 +566,13 @@ Create and start the service:
 
 ```
 
-- 3. Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):
+- 3️⃣ Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):
 
 > In the example, the critical processor temperature is 99 degrees for the last 2 hours.
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Data.jpg)
 
-- 4. Install [Grafana Enterprise](https://grafana.com/grafana/download).
+- 4️⃣ Install [Grafana Enterprise](https://grafana.com/grafana/download).
 
 ```Bash
 apt-get install -y adduser libfontconfig1 musl
@@ -582,7 +582,7 @@ systemctl start grafana-server
 systemctl status grafana-server
 ```
 
-- 5. Dashboard settings for displaying graphs:
+- 5️⃣ Dashboard settings for displaying graphs:
 
 The example shows the very same indicator that we have recorded in the database:
 
