@@ -1,11 +1,9 @@
 function Get-Sensor {
     <#
     .SYNOPSIS
-
     Version 0.2
-    Module for local and remote monitoring of load and temperature sensors via OpenHardwareMonitor and LibreHardwareMonitor
-    The module realizes all ways of obtaining information: .NET library, CIM (Common Information Model) and REST API.
-    Response speed through CIM is on average 5 times faster (200 milliseconds vs. 1 second) because a running instance of the application is used to read.
+    Module for local and remote data acquisition temperature, load and other sensors system via OpenHardwareMonitor and LibreHardwareMonitor
+    Implemented ways to get information: REST API, .NET library and CIM (Common Information Model).
     .DESCRIPTION
     Default:
     Get-Sensor -Path "$home\Documents\OpenHardwareMonitor\OpenHardwareMonitor"
@@ -19,6 +17,8 @@ function Get-Sensor {
     Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB
     .LINK
     https://github.com/Lifailon/PowerShellHardwareMonitor
+    https://github.com/openhardwaremonitor/openhardwaremonitor
+    https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
     #>
     param (
         [switch]$Libre,
@@ -37,7 +37,7 @@ function Get-Sensor {
             $path = "$home\Documents\OpenHardwareMonitor\OpenHardwareMonitor"
         }
     }
-    ### REST API
+    ### OpenHardwareMonitor and LibreHardwareMonitor REST API
     if ($null -ne $Server) {
         $Data = Invoke-RestMethod "http://$($Server):$($Port)/data.json"
         $Collections = New-Object System.Collections.Generic.List[System.Object]
@@ -86,7 +86,7 @@ function Get-Sensor {
         @{name = "Max";expression = { [int]$_.Max }}
         $Sensors | Sort-Object HardwareName,SensorType,SensorName
     }
-    ### OpenHardwareMonitor or LibreHardwareMonitor via CIM
+    ### OpenHardwareMonitor and LibreHardwareMonitor via CIM
     else {
         $Process_Used = Get-Process OpenHardwareMonitor -ErrorAction Ignore
         if ($null -eq $Process_Used) {
@@ -120,59 +120,50 @@ function Get-Sensor {
     }
 }
 
-function Send-ToInfluxDB {
-<#
-.SYNOPSIS
-Module for send metrics sensors to the database
-.DESCRIPTION
-Example:
-Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB -Server 192.168.3.104 -Port 8086 -Database powershell -Table sensors -Log
-Use this construct to create service:
-while ($True) {
-    Get-Sensor -Server 192.168.3.100 | Send-ToInfluxDB
-    Start-Sleep -Seconds 5
-}
-.LINK
-https://github.com/Lifailon/SensorsToInfluxDB
-#>
-param (
-    [Parameter(Mandatory,ValueFromPipeline)][array]$Data,
-    [string]$Server       = "192.168.3.104",
-    [int]$Port            = 8086,
-    [string]$Database     = "powershell",
-    [string]$Table        = "sensors",
-    [switch]$Log
-)
-$srv = $Server+":"+$Port
-$url = "http://$srv/write?db=$Database"
-$tz  = (Get-TimeZone).BaseUtcOffset.TotalMinutes
-$unixtime  = (New-TimeSpan -Start (Get-Date "01/01/1970") -End ((Get-Date).AddMinutes(-$tz))).TotalSeconds # UTC 0 (if +)
-$timestamp = ([string]$unixtime -replace "\..+") + "000000000"
-$ComputerName  = $Data.Server
-$Memory        = $Data.MEM_Used_Proc -replace "\,","." -replace "\s.+"
-$CPU           = $Data.CPU_Load -replace "\,","." -replace "\s.+"
-$CPU_Temp      = $Data.CPU_Temp -replace "\,","." -replace "\s.+"
-$GPU           = $Data.GPU_Load -replace "\,","." -replace "\s.+"
-$GPU_Temp      = $Data.GPU_Temp -replace "\,","." -replace "\s.+"
-$HDD_Temp      = $Data.HDD_Temp -replace "\,","." -replace "\s.+"
-try {
-    Invoke-RestMethod -Method POST -Uri $url -Body `
-    "$Table,Host=$ComputerName Memory=$Memory,CPU=$CPU,CPU_Temp=$CPU_Temp,GPU=$GPU,GPU_Temp=$GPU_Temp,HDD_Temp=$HDD_Temp $timestamp" > $null
-    Write-Host True -ForegroundColor Green
-}
-catch {
-    Write-Error False
-}
-finally {
-    if ($Log) {
-        Write-Host Host=$ComputerName
-        Write-Host Memory=$Memory
-        Write-Host CPU=$CPU
-        Write-Host CPU_Temp=$CPU_Temp
-        Write-Host GPU=$GPU
-        Write-Host GPU_Temp=$GPU_Temp
-        Write-Host HDD_Temp=$HDD_Temp
-        Write-Host
+function Send-TemperatureToInfluxDB {
+    <#
+    .SYNOPSIS
+    Module for send metrics sensors to the database
+    .DESCRIPTION
+    Example:
+    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Server 192.168.3.99) -Log
+    while ($True) {
+        $Data = Get-Sensor -Server 192.168.3.99
+        Send-TemperatureToInfluxDB -Data $Data
+        Start-Sleep -Seconds 3
     }
-}
+    .LINK
+    https://github.com/Lifailon/PowerShellHardwareMonitor
+    #>
+    param (
+        [Parameter(Mandatory,ValueFromPipeline)]$Data,
+        [string]$ComputerName = $($(Get-CimInstance CIM_ComputerSystem).Name),
+        [string]$ServerInflux = "192.168.3.102",
+        [int]$Port            = 8086,
+        [string]$Database     = "PowerShell",
+        [string]$Table        = "HardwareMonitor",
+        [switch]$Log
+    )
+    $url = "http://$($ServerInflux):$($Port)/write?db=$Database"
+    $TimeZone  = (Get-TimeZone).BaseUtcOffset.TotalMinutes
+    $UnixTime  = (New-TimeSpan -Start (Get-Date "01/01/1970") -End ((Get-Date).AddMinutes(-$TimeZone))).TotalSeconds # if + for UTC 0 
+    $TimeStamp = ([string]$UnixTime -replace "\..+") + "000000000"
+    ### Get data only Temperatures
+    $WhereData = $Data | Where-Object SensorName -eq Temperatures
+    foreach ($wd in $WhereData) {
+        $HardwareName = $wd.HardwareName -replace "\s","_"
+        $SensorName = $wd.SensorName -replace "\s","_"
+        $SensorType = $wd.SensorType -replace "\s","_"
+        $Value = $wd.Value -replace "\,","." -replace "\s.+"
+        Invoke-RestMethod -Method POST -Uri $url -Body `
+        "$Table,Host=$ComputerName,HardwareName=$HardwareName,SensorName=$SensorName,SensorType=$SensorType Value=$Value $TimeStamp" > $null
+        if ($Log) {
+            Write-Host "ComputerName=$ComputerName"
+            Write-Host "HardwareName=$HardwareName"
+            Write-Host "SensorName=$SensorName"
+            Write-Host "SensorType=$SensorType"
+            Write-Host "Value=$Value"
+            Write-Host
+        }
+    }
 }
