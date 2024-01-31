@@ -14,7 +14,7 @@ This module implements an out-of-the-box and universal solution for configuring 
 
 - [🚀 Install](#-install)
 - [📑 Get data](#-get-data)
-- [📊 Monitoring settings](#-monitoring-settings)
+- [📊 Monitoring](#-monitoring)
 
 ## 🚀 Install
 
@@ -22,15 +22,15 @@ This module implements an out-of-the-box and universal solution for configuring 
 
 - [PowerShell Core](https://github.com/PowerShell/PowerShell)
 
-- Set the data retrieval source of your choice with a single cmdlet in your PowerShell console (default installation path: `C:\Users\<UserName>\Documents`).
+Set the data retrieval source of your choice with a single cmdlet in your PowerShell console (default installation path: `C:\Users\<UserName>\Documents`).
 
-Install **OpenHardwareMonitor** via the [GitHub repository](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor):
+- Install **OpenHardwareMonitor** via the [GitHub repository](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor):
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-OpenHardwareMonitor.ps1")
 ```
 
-Install **Library** from [website](https://openhardwaremonitor.org/):
+- Install **Library** from [website](https://openhardwaremonitor.org/):
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
@@ -59,7 +59,7 @@ Send-TemperatureToInfluxDB PowerShellHardwareMonitor
 
 Difference in the amount of data (non-empty) for **HUAWEI MateBook X Pro laptop**.
 
-- REST API via OpenHardwareMonitor
+### REST API via OpenHardwareMonitor
 
 ```PowerShell
 > Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
@@ -84,7 +84,7 @@ Generic Memory               Data       Available Memory 0,6 GB  0,6 GB  0,6 GB
 Generic Hard Disk            Load       Used Space       51,7 %  51,7 %  51,7 %
 ```
 
-- REST API via LibreHardwareMonitor
+### REST API via LibreHardwareMonitor
 
 ```PowerShell
 > Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
@@ -193,7 +193,7 @@ HB5781P1EEW-31T               Capacities   Full Charged Capacity          52413 
 HB5781P1EEW-31T               Capacities   Remaining Capacity             20813 mWh  7057 mWh  21044 mWh
 ```
 
-- .NET Library via LibreHardwareMonitor
+### .NET Library via LibreHardwareMonitor
 
 > 💡 Administrator rights are required to run
 
@@ -614,5 +614,52 @@ WDC WD2005FBYZ-01YCBB2        Read Rate                     Throughput 34       
 WDC WD2005FBYZ-01YCBB2        Write Rate                    Throughput 35        0       0 4379267
 ```
 
-## 📊 Monitoring settings
+## 📊 Monitoring
+
+Process configuring **temperature sensor monitoring**.
+
+- 1. Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x in Ubuntu:
+
+> Define the server on which the time series database will be installed (it can be WSL or a virtual machine).
+
+```Bash
+wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
+sudo dpkg -i influxdb_1.8.10_amd64.deb
+systemctl start influxdb
+systemctl status influxdb
+```
+
+- 2. Creating a Windows service to send sensors to the database.
+
+> Pre-determine the source of data retrieval (REST, CIM or Library) and test it.
+
+Configure the script first:
+
+```PowerShell
+
+```
+
+Create and start the service:
+
+> Administrator rights are required for library and cim
+
+```PowerShell
+
+```
+
+- 3. Check the received data using InfluxDB Studio:
+
+
+
+- 4. Install [Grafana Enterprise](https://grafana.com/grafana/download).
+
+```Bash
+apt-get install -y adduser libfontconfig1 musl
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_10.3.1_amd64.deb
+dpkg -i grafana-enterprise_10.3.1_amd64.deb
+systemctl start grafana-server
+systemctl status grafana-server
+```
+
+- 5. Dashboard settings for displaying graphs:
 

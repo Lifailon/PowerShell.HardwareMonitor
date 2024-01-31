@@ -1,9 +1,8 @@
 function Get-Sensor {
     <#
     .SYNOPSIS
-    Version 0.2
     Module for local and remote data acquisition temperature, load and other sensors system via OpenHardwareMonitor and LibreHardwareMonitor
-    Implemented ways to get information: REST API, .NET library and CIM (Common Information Model).
+    Implemented ways to get information: REST API, .NET library and CIM (Common Information Model)
     .DESCRIPTION
     Example:
     Get-Sensor
@@ -12,7 +11,7 @@ function Get-Sensor {
     Get-Sensor -Libre -Path "$home\Documents\LibreHardwareMonitor"
     Get-Sensor -Libre -CIM
     Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "0,0" | Format-Table
-    Get-Sensor -Server 192.168.3.100 -Port 8085
+    Get-Sensor -Server 192.168.3.99 -Port 8085
     .LINK
     https://github.com/Lifailon/PowerShellHardwareMonitor
     https://github.com/openhardwaremonitor/openhardwaremonitor
@@ -121,10 +120,11 @@ function Get-Sensor {
 function Send-TemperatureToInfluxDB {
     <#
     .SYNOPSIS
-    Module for send metrics sensors to the database
+    Module for send metrics sensors temperature to the database InfluxDB 1.x
     .DESCRIPTION
     Example:
-    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Server 192.168.3.99) -Log
+    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Server 192.168.3.99) -LogConsole
+    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Server 192.168.3.99) -LogWriteFile
     while ($True) {
         $Data = Get-Sensor -Server 192.168.3.99
         Send-TemperatureToInfluxDB -Data $Data
