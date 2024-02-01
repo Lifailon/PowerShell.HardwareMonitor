@@ -467,7 +467,16 @@ Process configuring **temperature sensor monitoring**.
 
 - Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x
 
-> Define the server on which the time series database will be installed (it can be WSL or a virtual machine).
+Define the server on which the time series database will be installed (it can be Windows, WSL or a virtual machine).
+
+Install to Windows:
+
+```PowerShell
+Invoke-RestMethod "https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip" -OutFile "$home\Downloads\influxdb-1.8.10_windows_amd64.zip"
+Expand-Archive "$home\Downloads\influxdb-1.8.10_windows_amd64.zip" -DestinationPath "$home\Downloads\"
+Remove-Item "$home\Downloads\influxdb-1.8.10_windows_amd64.zip"
+& "$home\Downloads\influxdb-1.8.10-1\influxd.exe"
+```
 
 Example for Ubuntu:
 
@@ -561,3 +570,37 @@ For clarity and convenience, customize the celsius data type and legends (displa
 Monitoring two hosts:
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard-Group.jpg)
+
+## Deployment
+
+For deployment LibreHardwareMonitor as a monitoring agent and collect data on a single computer from multiple machines simultaneously, you can use the following approach via the **WinRM protocol** (you must have administrator rights in the domain and have the appropriate group policies configured beforehand):
+
+```PowerShell
+$ServerList = (
+    "server-01",
+    "server-02"
+)
+foreach ($Server in $ServerList) {
+    Invoke-Command $Server -ScriptBlock {
+        # Install LibreHardwareMonitor
+        $path = "$home\Documents\LibreHardwareMonitor"
+        $zip = "$($path).zip"
+        $url = "https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/releases/latest"
+        $url_down = $(Invoke-RestMethod $url).assets.browser_download_url
+        Invoke-RestMethod $url_down -OutFile $zip
+        Expand-Archive -Path $zip -DestinationPath $path
+        Remove-Item -Path $zip
+        # Run Web-Server
+        $Config = Get-Content "$path\LibreHardwareMonitor.config"
+        $Config = $Config -replace 'key="runWebServerMenuItem" value="false"','key="runWebServerMenuItem" value="true"'
+        #$Config = $Config -replace 'key="listenerPort" value="8085"','key="listenerPort" value="8086"'
+        $Config = $Config -replace 'key="minTrayMenuItem" value="false"','key="minTrayMenuItem" value="true"'
+        $Config = $Config -replace 'key="minCloseMenuItem" value="false"','key="minCloseMenuItem" value="true"'
+        $Config | Out-File "$path\LibreHardwareMonitor.config"
+        # Run Application
+        Start-Process "$path\LibreHardwareMonitor.exe" -WindowStyle Hidden
+    }
+}
+```
+
+Downloads the latest version from the GitHub repository, customizes the configuration file, and starts the process.
