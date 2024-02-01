@@ -549,7 +549,7 @@ For simple setting (without using variables or regular expressions), use groupin
 
 For clarity and convenience, customize the celsius data type and legends (displaying minimum, maximum, and average readings for the specified time period).
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/GrafanaGrafana-Dashboard-Group.jpg)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Legend-Celsius.jpg)
 
 Monitoring two hosts:
 
