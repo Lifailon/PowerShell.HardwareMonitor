@@ -9,7 +9,7 @@ if (Test-Path $path) {
 Invoke-RestMethod $url -OutFile "$path\PowerShellHardwareMonitor.psm1"
 
 ### Install process scripts
-$url_process = "https://api.github.com/repos/Lifailon/WinAPI/contents/WinAPI/Process"
+$url_process = "https://api.github.com/repos/Lifailon/PowerShellHardwareMonitor/contents/Process"
 $Process_Files = Invoke-RestMethod -Uri $url_process
 foreach ($Process_File in $Process_Files) {
     $File_Name = $Process_File.name
