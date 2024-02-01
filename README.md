@@ -36,7 +36,7 @@ Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubus
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
 ```
 
-- **Quickly install or update the module and scripts for creat background process send sensors to the database **
+- Quickly **install or update the module and scripts** for creat background process send sensors to the database
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-PowerShellHardwareMonitor.ps1")
