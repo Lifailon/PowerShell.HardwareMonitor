@@ -7,10 +7,8 @@ This module implements an out-of-the-box and universal solution for configuring 
 🔗 Implemented ways to get information:
 
 ✅ REST API \
-✅ .NET Library \
-✅ CIM (Common Information Model)
-
-> Response speed through CIM is on average 5 times faster (200 milliseconds vs. 1 second) because a running instance of the application is used to retrieve the data, which stores the minimum and maximum values.
+✅ CIM (Common Information Model) \
+✅ .NET Library
 
 - [🚀 Install](#-install)
 - [📑 Data](#-data)
@@ -205,7 +203,11 @@ HB5781P1EEW-31T               Capacities   Remaining Capacity             53765 
 
 ### .NET Library via LibreHardwareMonitor
 
-💡 To get data from all sensors, you need to run the console with **administrator privileges**. Does not receive data from all sensors.
+💡 To get data from all sensors, you need to run the console with **administrator privileges**.
+
+💡 Response speed through CIM is on average 5 times faster (200 milliseconds vs. 1 second to .NET Library) because a running instance of the application is used to retrieve the data, which stores the minimum and maximum values.
+
+💡 Does not receive data from all sensors, only the sensor data of the processor can be retrieved.
 
 ```PowerShell
 > Get-Sensor -Libre -Library | Where-Object Value -ne 0 | Format-Table
