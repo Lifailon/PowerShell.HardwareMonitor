@@ -24,19 +24,19 @@ This module implements an out-of-the-box and universal solution for configuring 
 
 Set the data retrieval source of your choice with a single cmdlet in your PowerShell console (default installation path: `C:\Users\<UserName>\Documents`).
 
-- Install **OpenHardwareMonitor** via the [GitHub repository](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor):
+- Install **OpenHardwareMonitor** from [website](https://openhardwaremonitor.org/):
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-OpenHardwareMonitor.ps1")
 ```
 
-- Install **Library** from [website](https://openhardwaremonitor.org/):
+- Install **LibreHardwareMonitor** from the [GitHub repository](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor):
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
 ```
 
-- **Quickly install or update the module**
+- **Quickly install or update the module and scripts for creat background process send sensors to the database **
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-PowerShellHardwareMonitor.ps1")
@@ -192,90 +192,6 @@ HB5781P1EEW-31T               Capacities   Designed Capacity              59424 
 HB5781P1EEW-31T               Capacities   Full Charged Capacity          52413 mWh  52413 mWh 52413 mWh
 HB5781P1EEW-31T               Capacities   Remaining Capacity             20813 mWh  7057 mWh  21044 mWh
 ```
-
-### .NET Library via LibreHardwareMonitor
-
-> 💡 To get data from all sensors, you need to run the console with **administrator privileges**
-
-```PowerShell
-> Get-Sensor -Libre -Library | Where-Object Value -ne 0 | Format-Table
-
-HardwareName                 SensorName                     SensorType     Value  Min  Max
-------------                 ----------                     ----------     -----  ---  ---
-12th Gen Intel Core i7-1260P Bus Speed                      Clock 0          100  100  100
-12th Gen Intel Core i7-1260P CPU Core #1                    Clock 1         3495 3495 3495
-12th Gen Intel Core i7-1260P CPU Core #10                   Clock 10        2596 2596 2596
-12th Gen Intel Core i7-1260P CPU Core #11                   Clock 11        2596 2596 2596
-12th Gen Intel Core i7-1260P CPU Core #12                   Clock 12        2696 2696 2696
-12th Gen Intel Core i7-1260P CPU Core #2                    Clock 2         3594 3594 3594
-12th Gen Intel Core i7-1260P CPU Core #3                    Clock 3         3594 3594 3594
-12th Gen Intel Core i7-1260P CPU Core #4                    Clock 4         3594 3594 3594
-12th Gen Intel Core i7-1260P CPU Core #5                    Clock 5         2796 2796 2796
-12th Gen Intel Core i7-1260P CPU Core #6                    Clock 6         2796 2796 2796
-12th Gen Intel Core i7-1260P CPU Core #7                    Clock 7         2895 2895 2895
-12th Gen Intel Core i7-1260P CPU Core #8                    Clock 8         2895 2895 2895
-12th Gen Intel Core i7-1260P CPU Core #9                    Clock 9         2596 2596 2596
-12th Gen Intel Core i7-1260P CPU Total                      Load 0            31   31   31
-12th Gen Intel Core i7-1260P CPU Core Max                   Load 1            87   87   87
-12th Gen Intel Core i7-1260P CPU Core #5                    Load 10           34   34   34
-12th Gen Intel Core i7-1260P CPU Core #6                    Load 11           31   31   31
-12th Gen Intel Core i7-1260P CPU Core #7                    Load 12           37   37   37
-12th Gen Intel Core i7-1260P CPU Core #8                    Load 13           39   39   39
-12th Gen Intel Core i7-1260P CPU Core #9                    Load 14           32   32   32
-12th Gen Intel Core i7-1260P CPU Core #10                   Load 15           72   72   72
-12th Gen Intel Core i7-1260P CPU Core #11                   Load 16           24   24   24
-12th Gen Intel Core i7-1260P CPU Core #12                   Load 17           42   42   42
-12th Gen Intel Core i7-1260P CPU Core #1 Thread #1          Load 2            87   87   87
-12th Gen Intel Core i7-1260P CPU Core #1 Thread #2          Load 3             6    6    6
-12th Gen Intel Core i7-1260P CPU Core #2 Thread #1          Load 4            30   30   30
-12th Gen Intel Core i7-1260P CPU Core #2 Thread #2          Load 5            11   11   11
-12th Gen Intel Core i7-1260P CPU Core #3 Thread #1          Load 6            28   28   28
-12th Gen Intel Core i7-1260P CPU Core #4 Thread #1          Load 8            33   33   33
-12th Gen Intel Core i7-1260P CPU Package                    Power 0           18   18   18
-12th Gen Intel Core i7-1260P CPU Cores                      Power 1           13   13   13
-12th Gen Intel Core i7-1260P CPU Core #1                    Temperature 0     83   83   83
-12th Gen Intel Core i7-1260P CPU Core #2                    Temperature 1     80   80   80
-12th Gen Intel Core i7-1260P CPU Core #11                   Temperature 10    81   81   81
-12th Gen Intel Core i7-1260P CPU Core #12                   Temperature 11    84   84   84
-12th Gen Intel Core i7-1260P CPU Package                    Temperature 12    84   84   84
-12th Gen Intel Core i7-1260P CPU Core #1 Distance to TjMax  Temperature 13    17   17   17
-12th Gen Intel Core i7-1260P CPU Core #2 Distance to TjMax  Temperature 14    20   20   20
-12th Gen Intel Core i7-1260P CPU Core #3 Distance to TjMax  Temperature 15    19   19   19
-12th Gen Intel Core i7-1260P CPU Core #4 Distance to TjMax  Temperature 16    23   23   23
-12th Gen Intel Core i7-1260P CPU Core #5 Distance to TjMax  Temperature 17    20   20   20
-12th Gen Intel Core i7-1260P CPU Core #6 Distance to TjMax  Temperature 18    20   20   20
-12th Gen Intel Core i7-1260P CPU Core #7 Distance to TjMax  Temperature 19    20   20   20
-12th Gen Intel Core i7-1260P CPU Core #3                    Temperature 2     81   81   81
-12th Gen Intel Core i7-1260P CPU Core #8 Distance to TjMax  Temperature 20    20   20   20
-12th Gen Intel Core i7-1260P CPU Core #9 Distance to TjMax  Temperature 21    19   19   19
-12th Gen Intel Core i7-1260P CPU Core #10 Distance to TjMax Temperature 22    19   19   19
-12th Gen Intel Core i7-1260P CPU Core #11 Distance to TjMax Temperature 23    19   19   19
-12th Gen Intel Core i7-1260P CPU Core #12 Distance to TjMax Temperature 24    16   16   16
-12th Gen Intel Core i7-1260P Core Max                       Temperature 25    84   84   84
-12th Gen Intel Core i7-1260P Core Average                   Temperature 26    81   81   81
-12th Gen Intel Core i7-1260P CPU Core #4                    Temperature 3     77   77   77
-12th Gen Intel Core i7-1260P CPU Core #5                    Temperature 4     80   80   80
-12th Gen Intel Core i7-1260P CPU Core #6                    Temperature 5     80   80   80
-12th Gen Intel Core i7-1260P CPU Core #7                    Temperature 6     80   80   80
-12th Gen Intel Core i7-1260P CPU Core #8                    Temperature 7     80   80   80
-12th Gen Intel Core i7-1260P CPU Core #9                    Temperature 8     81   81   81
-12th Gen Intel Core i7-1260P CPU Core #10                   Temperature 9     81   81   81
-12th Gen Intel Core i7-1260P CPU Core                       Voltage 0          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #1                    Voltage 1          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #10                   Voltage 10         1    1    1
-12th Gen Intel Core i7-1260P CPU Core #11                   Voltage 11         1    1    1
-12th Gen Intel Core i7-1260P CPU Core #12                   Voltage 12         1    1    1
-12th Gen Intel Core i7-1260P CPU Core #2                    Voltage 2          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #3                    Voltage 3          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #4                    Voltage 4          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #5                    Voltage 5          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #6                    Voltage 6          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #7                    Voltage 7          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #8                    Voltage 8          1    1    1
-12th Gen Intel Core i7-1260P CPU Core #9                    Voltage 9          1    1    1
-```
-
-> On neither of my two systems has it worked to open the .NET library for OpenHardwareMonitor
 
 ### CIM (Common Information Model) via OpenHardwareMonitor
 
@@ -532,6 +448,90 @@ WDC WD2005FBYZ-01YCBB2        Temperature                   Temperature 0       
 WDC WD2005FBYZ-01YCBB2        Read Rate                     Throughput 34        0       0   37001
 WDC WD2005FBYZ-01YCBB2        Write Rate                    Throughput 35        0       0 4379267
 ```
+
+### .NET Library via LibreHardwareMonitor
+
+> 💡 To get data from all sensors, you need to run the console with **administrator privileges**
+
+```PowerShell
+> Get-Sensor -Libre -Library | Where-Object Value -ne 0 | Format-Table
+
+HardwareName                 SensorName                     SensorType     Value  Min  Max
+------------                 ----------                     ----------     -----  ---  ---
+12th Gen Intel Core i7-1260P Bus Speed                      Clock 0          100  100  100
+12th Gen Intel Core i7-1260P CPU Core #1                    Clock 1         3495 3495 3495
+12th Gen Intel Core i7-1260P CPU Core #10                   Clock 10        2596 2596 2596
+12th Gen Intel Core i7-1260P CPU Core #11                   Clock 11        2596 2596 2596
+12th Gen Intel Core i7-1260P CPU Core #12                   Clock 12        2696 2696 2696
+12th Gen Intel Core i7-1260P CPU Core #2                    Clock 2         3594 3594 3594
+12th Gen Intel Core i7-1260P CPU Core #3                    Clock 3         3594 3594 3594
+12th Gen Intel Core i7-1260P CPU Core #4                    Clock 4         3594 3594 3594
+12th Gen Intel Core i7-1260P CPU Core #5                    Clock 5         2796 2796 2796
+12th Gen Intel Core i7-1260P CPU Core #6                    Clock 6         2796 2796 2796
+12th Gen Intel Core i7-1260P CPU Core #7                    Clock 7         2895 2895 2895
+12th Gen Intel Core i7-1260P CPU Core #8                    Clock 8         2895 2895 2895
+12th Gen Intel Core i7-1260P CPU Core #9                    Clock 9         2596 2596 2596
+12th Gen Intel Core i7-1260P CPU Total                      Load 0            31   31   31
+12th Gen Intel Core i7-1260P CPU Core Max                   Load 1            87   87   87
+12th Gen Intel Core i7-1260P CPU Core #5                    Load 10           34   34   34
+12th Gen Intel Core i7-1260P CPU Core #6                    Load 11           31   31   31
+12th Gen Intel Core i7-1260P CPU Core #7                    Load 12           37   37   37
+12th Gen Intel Core i7-1260P CPU Core #8                    Load 13           39   39   39
+12th Gen Intel Core i7-1260P CPU Core #9                    Load 14           32   32   32
+12th Gen Intel Core i7-1260P CPU Core #10                   Load 15           72   72   72
+12th Gen Intel Core i7-1260P CPU Core #11                   Load 16           24   24   24
+12th Gen Intel Core i7-1260P CPU Core #12                   Load 17           42   42   42
+12th Gen Intel Core i7-1260P CPU Core #1 Thread #1          Load 2            87   87   87
+12th Gen Intel Core i7-1260P CPU Core #1 Thread #2          Load 3             6    6    6
+12th Gen Intel Core i7-1260P CPU Core #2 Thread #1          Load 4            30   30   30
+12th Gen Intel Core i7-1260P CPU Core #2 Thread #2          Load 5            11   11   11
+12th Gen Intel Core i7-1260P CPU Core #3 Thread #1          Load 6            28   28   28
+12th Gen Intel Core i7-1260P CPU Core #4 Thread #1          Load 8            33   33   33
+12th Gen Intel Core i7-1260P CPU Package                    Power 0           18   18   18
+12th Gen Intel Core i7-1260P CPU Cores                      Power 1           13   13   13
+12th Gen Intel Core i7-1260P CPU Core #1                    Temperature 0     83   83   83
+12th Gen Intel Core i7-1260P CPU Core #2                    Temperature 1     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #11                   Temperature 10    81   81   81
+12th Gen Intel Core i7-1260P CPU Core #12                   Temperature 11    84   84   84
+12th Gen Intel Core i7-1260P CPU Package                    Temperature 12    84   84   84
+12th Gen Intel Core i7-1260P CPU Core #1 Distance to TjMax  Temperature 13    17   17   17
+12th Gen Intel Core i7-1260P CPU Core #2 Distance to TjMax  Temperature 14    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #3 Distance to TjMax  Temperature 15    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #4 Distance to TjMax  Temperature 16    23   23   23
+12th Gen Intel Core i7-1260P CPU Core #5 Distance to TjMax  Temperature 17    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #6 Distance to TjMax  Temperature 18    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #7 Distance to TjMax  Temperature 19    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #3                    Temperature 2     81   81   81
+12th Gen Intel Core i7-1260P CPU Core #8 Distance to TjMax  Temperature 20    20   20   20
+12th Gen Intel Core i7-1260P CPU Core #9 Distance to TjMax  Temperature 21    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #10 Distance to TjMax Temperature 22    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #11 Distance to TjMax Temperature 23    19   19   19
+12th Gen Intel Core i7-1260P CPU Core #12 Distance to TjMax Temperature 24    16   16   16
+12th Gen Intel Core i7-1260P Core Max                       Temperature 25    84   84   84
+12th Gen Intel Core i7-1260P Core Average                   Temperature 26    81   81   81
+12th Gen Intel Core i7-1260P CPU Core #4                    Temperature 3     77   77   77
+12th Gen Intel Core i7-1260P CPU Core #5                    Temperature 4     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #6                    Temperature 5     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #7                    Temperature 6     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #8                    Temperature 7     80   80   80
+12th Gen Intel Core i7-1260P CPU Core #9                    Temperature 8     81   81   81
+12th Gen Intel Core i7-1260P CPU Core #10                   Temperature 9     81   81   81
+12th Gen Intel Core i7-1260P CPU Core                       Voltage 0          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #1                    Voltage 1          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #10                   Voltage 10         1    1    1
+12th Gen Intel Core i7-1260P CPU Core #11                   Voltage 11         1    1    1
+12th Gen Intel Core i7-1260P CPU Core #12                   Voltage 12         1    1    1
+12th Gen Intel Core i7-1260P CPU Core #2                    Voltage 2          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #3                    Voltage 3          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #4                    Voltage 4          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #5                    Voltage 5          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #6                    Voltage 6          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #7                    Voltage 7          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #8                    Voltage 8          1    1    1
+12th Gen Intel Core i7-1260P CPU Core #9                    Voltage 9          1    1    1
+```
+
+> On neither of my two systems has it worked to get data from the .NET library OpenHardwareMonitor
 
 ## 📊 Monitoring settings
 
