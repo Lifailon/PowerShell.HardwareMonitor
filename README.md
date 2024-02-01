@@ -543,14 +543,14 @@ The example shows the very same indicator that we have recorded in the database:
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard.jpg)
 
-For simple setting (without using variables or regular expressions), use filters to select the sensors you need:
+For simple setting (without using variables or regular expressions), use grouping by host and hardware name tags and filters by sensor name:
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Query.jpg)
 
-For clarity and convenience, customize the celsius and legends data type (displaying minimum, maximum, and average readings for the specified time period).
+For clarity and convenience, customize the celsius data type and legends (displaying minimum, maximum, and average readings for the specified time period).
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Legend-Unit.jpg)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/GrafanaGrafana-Dashboard-Group.jpg)
 
-Monitoring my two hosts:
+Monitoring two hosts:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard-Two-Host.jpg)
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard-Group.jpg)
