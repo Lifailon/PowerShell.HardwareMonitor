@@ -195,10 +195,10 @@ HB5781P1EEW-31T               Capacities   Remaining Capacity             20813 
 
 ### .NET Library via LibreHardwareMonitor
 
-> 💡 Administrator rights are required to run
+> 💡 To get data from all sensors, you need to run the console with **administrator privileges**
 
 ```PowerShell
-> Get-Sensor -Libre | Where-Object Value -ne 0 | Format-Table
+> Get-Sensor -Libre -Library | Where-Object Value -ne 0 | Format-Table
 
 HardwareName                 SensorName                     SensorType     Value  Min  Max
 ------------                 ----------                     ----------     -----  ---  ---
@@ -338,7 +338,7 @@ WDC WD2005FBYZ-01YCBB2 Temperature      Temperature 0    37  33   37
 ### CIM (Common Information Model) via LibreHardwareMonitor
 
 ```PowerShell
-> Get-Sensor -Libre -CIM | Format-Table
+> Get-Sensor -Libre | Format-Table
 
 HardwareName                  SensorName                    SensorType       Value     Min     Max
 ------------                  ----------                    ----------       -----     ---     ---
@@ -548,22 +548,50 @@ systemctl start influxdb
 systemctl status influxdb
 ```
 
-- 2. Creating a Windows service to send sensors to the database.
-
-> Pre-determine the source of data retrieval (REST, CIM or Library) and test it.
-
-Configure the script first:
-
-```PowerShell
-
-```
-
-Create and start the service:
+- 2. Creat background process to send sensors to the database.
 
 > Administrator rights are required for library and cim
 
-```PowerShell
+When installing the module, it includes a template script to send data to InfluxDB and to start and stop the background process. Pre-configure the script and check the database for data availability.
 
+Change the script `Write-Database.ps1` for local or remote data collection (select the data source using the module parameters):
+
+**Local**:
+
+```PowerShell
+while ($True) {
+    # $Data = Get-Sensor
+    $Data = Get-Sensor -Libre
+    # $Data = Get-Sensor -Libre -Library
+    Send-TemperatureToInfluxDB -Data $Data -ServerInflux "192.168.3.102" -Port 8086 -Database "PowerShell" -Table "HardwareMonitor" # -LogWriteFile
+    Start-Sleep -Seconds 5
+}
+```
+
+**Remote**:
+
+```PowerShell
+while ($True) {
+    $Data = Get-Sensor -Server 192.168.3.100 -Port 8085
+    Send-TemperatureToInfluxDB -ComputerName "192.168.3.100" -Data $Data -ServerInflux "192.168.3.102" -Port 8086 -Database "PowerShell" -Table "HardwareMonitor"
+    Start-Sleep -Seconds 5
+}
+```
+
+**Run a background process** to send sensors to the database with a specified timeout (`Process-Start.ps1`):
+
+```PowerShell
+$Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+$proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -Verb RunAs -WindowStyle Hidden -PassThru).id
+$proc_id > "$Path\process_id.txt"
+```
+
+We commit the id of the process when it is created to a temporary file so that it can be **stopped** (`Process-Stop.ps1`):
+
+```PowerShell
+$Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+$proc_id = Get-Content "$path\process_id.txt"
+Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
 ```
 
 - 3. Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):

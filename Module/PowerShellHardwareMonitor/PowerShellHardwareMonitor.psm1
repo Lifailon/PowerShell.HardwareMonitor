@@ -2,14 +2,14 @@ function Get-Sensor {
     <#
     .SYNOPSIS
     Module for local and remote data acquisition temperature, load and other sensors system via OpenHardwareMonitor and LibreHardwareMonitor
-    Implemented ways to get information: REST API, .NET library and CIM (Common Information Model)
+    Implemented ways to get information: REST API, CIM (Common Information Model) and .NET Library
     .DESCRIPTION
     Example:
     Get-Sensor
     Get-Sensor -Path "$home\Documents\OpenHardwareMonitor\OpenHardwareMonitor"
     Get-Sensor -Libre
     Get-Sensor -Libre -Path "$home\Documents\LibreHardwareMonitor"
-    Get-Sensor -Libre -CIM
+    Get-Sensor -Libre -Library
     Get-Sensor -Libre | Where-Object Value -ne 0 | Format-Table
     Get-Sensor -Server 192.168.3.99 | Where-Object Value -notmatch "^0,0" | Format-Table
     Get-Sensor -Server 192.168.3.99 -Port 8085
@@ -20,10 +20,10 @@ function Get-Sensor {
     #>
     param (
         [switch]$Libre,
-        [switch]$CIM,
-        $Path,
+        [switch]$Library,
         $Server,
-        [int]$Port = 8085
+        [int]$Port = 8085,
+        $Path
     )
     if ($Libre) {
         if ($null -eq $path) {
@@ -57,8 +57,8 @@ function Get-Sensor {
         }
         $Collections
     }
-    ### LibreHardwareMonitor via .NET library
-    elseif (($Libre -eq $True) -and ($CIM -eq $False)) {
+    ### LibreHardwareMonitor via .NET Library
+    elseif (($Libre -eq $True) -and ($Library -eq $True)) {
         Add-Type -Path "$path\LibreHardwareMonitorLib.dll"
         $Computer = New-Object -TypeName LibreHardwareMonitor.Hardware.Computer
         $Computer.IsCpuEnabled         = $true
@@ -124,12 +124,12 @@ function Send-TemperatureToInfluxDB {
     Module for send metrics sensors temperature to the database InfluxDB 1.x
     .DESCRIPTION
     Example:
-    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Server 192.168.3.99) -LogConsole
-    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Server 192.168.3.99) -LogWriteFile
+    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Libre) -LogConsole
+    Send-TemperatureToInfluxDB -Data $(Get-Sensor -Libre -Library) -LogWriteFile
     while ($True) {
-        $Data = Get-Sensor -Server 192.168.3.99
-        Send-TemperatureToInfluxDB -Data $Data
-        Start-Sleep -Seconds 3
+        $Data = Get-Sensor -Server 192.168.3.100 -Port 8085
+        Send-TemperatureToInfluxDB -ComputerName "192.168.3.100" -Data $Data -ServerInflux "192.168.3.102" -Port 8086 -Database "PowerShell" -Table "HardwareMonitor"
+        Start-Sleep -Seconds 5
     }
     .LINK
     https://github.com/Lifailon/PowerShellHardwareMonitor
@@ -149,8 +149,8 @@ function Send-TemperatureToInfluxDB {
     $TimeZone  = (Get-TimeZone).BaseUtcOffset.TotalMinutes
     $UnixTime  = (New-TimeSpan -Start (Get-Date "01/01/1970") -End ((Get-Date).AddMinutes(-$TimeZone))).TotalSeconds # if + for UTC 0 
     $TimeStamp = ([string]$UnixTime -replace "\..+") + "000000000"
-    ### Get data only Temperatures
-    $WhereData = $Data | Where-Object SensorName -eq Temperatures
+    ### Get data only Temperature
+    $WhereData = $Data | Where-Object {($_.SensorName -match "Temperature") -or ($_.SensorType -match "Temperature")}
     foreach ($wd in $WhereData) {
         $HardwareName = $wd.HardwareName -replace "\s","_"
         $SensorName = $wd.SensorName -replace "\s","_"
@@ -158,12 +158,12 @@ function Send-TemperatureToInfluxDB {
         $Value = $wd.Value -replace "\,","." -replace "\s.+"
         Invoke-RestMethod -Method POST -Uri $url -Body `
         "$Table,Host=$ComputerName,HardwareName=$HardwareName,SensorName=$SensorName,SensorType=$SensorType Value=$Value $TimeStamp" > $null
-        $LogText = "$(Get-Date)  $ComputerName  $HardwareName  $SensorName  $SensorType  $Value"
+        $LogText = "$(Get-Date -Format "dd.MM.yyyy hh:mm:ss")  $ComputerName  $HardwareName  $SensorName  $SensorType  $Value"
         if ($LogConsole) {
             Write-Host $LogText
         }
         elseif ($LogWriteFile) {
-            $LogText | Out-File $LogPath
+            $LogText | Out-File $LogPath -Append
         }
     }
 }
