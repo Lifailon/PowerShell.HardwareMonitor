@@ -543,10 +543,14 @@ The example shows the very same indicator that we have recorded in the database:
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard.jpg)
 
-First, filter the data by HardwareName and SensorType tags and set each request to a different name using GUI:
+For simple setting (without using variables or regular expressions), use filters to select the sensors you need:
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Query.jpg)
 
 For clarity and convenience, customize the celsius and legends data type (displaying minimum, maximum, and average readings for the specified time period).
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Legend-Unit.jpg)
+
+Monitoring my two hosts:
+
+![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard-Two-Host.jpg)
