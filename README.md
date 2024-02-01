@@ -205,7 +205,7 @@ HB5781P1EEW-31T               Capacities   Remaining Capacity             53765 
 
 ### .NET Library via LibreHardwareMonitor
 
-To get data from all sensors, you need to run the console with 💡 **administrator privileges**
+💡 To get data from all sensors, you need to run the console with **administrator privileges**. Does not receive data from all sensors.
 
 ```PowerShell
 > Get-Sensor -Libre -Library | Where-Object Value -ne 0 | Format-Table
@@ -465,7 +465,7 @@ WDC WD2005FBYZ-01YCBB2 Temperature                   Temperature 0       36    3
 
 Process configuring **temperature sensor monitoring**.
 
-- Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x:
+- Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x
 
 > Define the server on which the time series database will be installed (it can be WSL or a virtual machine).
 
@@ -480,7 +480,7 @@ systemctl status influxdb
 
 - Creat background process to send sensors to the database.
 
-> Administrator rights are required for library and cim
+> 💡 Administrator rights are required for CIM (default) and Library (raw version)
 
 When installing the module, it includes a template script to send data to InfluxDB and to start and stop the background process. Pre-configure the script and check the database for data availability.
 
@@ -516,7 +516,7 @@ $proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -
 $proc_id > "$Path\process_id.txt"
 ```
 
-- We commit the id of the process when it is created to a temporary file so that it can be **stopped** (`Process-Stop.ps1`):
+We commit the id of the process when it is created to a temporary file so that it can be **stopped** (`Process-Stop.ps1`):
 
 ```PowerShell
 $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
@@ -524,9 +524,9 @@ $proc_id = Get-Content "$path\process_id.txt"
 Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
 ```
 
-Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):
+- Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio)
 
-> In the example, the critical processor temperature is 99 degrees for the last 2 hours.
+In the example, the critical processor temperature is 99 degrees for the last 2 hours:
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Data.jpg)
 
@@ -554,7 +554,7 @@ For simple setting (without using variables or regular expressions), use groupin
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Query.jpg)
 
-For clarity and convenience, customize the celsius data type and legends (displaying minimum, maximum, and average readings for the specified time period).
+For clarity and convenience, customize the celsius data type and legends (displaying minimum, maximum, and average readings for the specified time period):
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Legend-Celsius.jpg)
 
