@@ -13,8 +13,9 @@ This module implements an out-of-the-box and universal solution for configuring 
 > Response speed through CIM is on average 5 times faster (200 milliseconds vs. 1 second) because a running instance of the application is used to retrieve the data, which stores the minimum and maximum values.
 
 - [🚀 Install](#-install)
-- [📑 Get data](#-get-data)
-- [📊 Monitoring settings](#-monitoring-settings)
+- [📑 Data](#-data)
+- [📊 InfluxDB](#-influxdb)
+- [📈 Grafana](#-grafana)
 
 ## 🚀 Install
 
@@ -55,7 +56,7 @@ Get-Sensor                 PowerShellHardwareMonitor
 Send-TemperatureToInfluxDB PowerShellHardwareMonitor
 ```
 
-## 📑 Get data
+## 📑 Data
 
 Difference in the amount of data (non-empty) for **HUAWEI MateBook X Pro laptop**.
 
@@ -460,13 +461,15 @@ WDC WD2005FBYZ-01YCBB2 Used Space                    Load 0              69    6
 WDC WD2005FBYZ-01YCBB2 Temperature                   Temperature 0       36    34       37
 ```
 
-## 📊 Monitoring settings
+## 📊 InfluxDB
 
 Process configuring **temperature sensor monitoring**.
 
-- 1. Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x in Ubuntu:
+- Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x:
 
 > Define the server on which the time series database will be installed (it can be WSL or a virtual machine).
+
+Example for Ubuntu:
 
 ```Bash
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
@@ -475,7 +478,7 @@ systemctl start influxdb
 systemctl status influxdb
 ```
 
-- 2. Creat background process to send sensors to the database.
+- Creat background process to send sensors to the database.
 
 > Administrator rights are required for library and cim
 
@@ -513,7 +516,7 @@ $proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -
 $proc_id > "$Path\process_id.txt"
 ```
 
-We commit the id of the process when it is created to a temporary file so that it can be **stopped** (`Process-Stop.ps1`):
+- We commit the id of the process when it is created to a temporary file so that it can be **stopped** (`Process-Stop.ps1`):
 
 ```PowerShell
 $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
@@ -521,13 +524,17 @@ $proc_id = Get-Content "$path\process_id.txt"
 Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
 ```
 
-- 3. Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):
+Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio):
 
 > In the example, the critical processor temperature is 99 degrees for the last 2 hours.
 
 ![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Data.jpg)
 
-- 4. Install [Grafana Enterprise](https://grafana.com/grafana/download).
+## 📈 Grafana
+
+- Install [Grafana Enterprise](https://grafana.com/grafana/download).
+
+Example for Ubuntu:
 
 ```Bash
 apt-get install -y adduser libfontconfig1 musl
@@ -537,7 +544,7 @@ systemctl start grafana-server
 systemctl status grafana-server
 ```
 
-- 5. Dashboard settings:
+- Dashboard settings.
 
 The example shows the very same indicator that we have recorded in the database:
 
