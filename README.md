@@ -1,6 +1,6 @@
 # PowerShell.HardwareMonitor
 
-Module for local and remote data acquisition temperature, load and other sensors system via [OpenHardwareMonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) and [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) to output PowerShell console.
+Module for local and remote data acquisition temperature, fan speeds, load and other sensors system via [OpenHardwareMonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) and [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) to output PowerShell console.
 
 This module implements an out-of-the-box and universal solution for configuring temperature sensor monitoring with **InfluxDB v1.x** and visualization in **Grafana**.
 
@@ -9,6 +9,8 @@ This module implements an out-of-the-box and universal solution for configuring 
 ✅ REST API \
 ✅ CIM (Common Information Model) \
 ✅ .NET Library
+
+📌 Notes:
 
 - [🚀 Install](#-install)
 - [📑 Data](#-data)
@@ -37,12 +39,12 @@ or
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
 ```
 
-### Module
+### 📥 Module
 
 Install module from [NuGet repository](https://www.nuget.org/packages/PowerShell.HardwareMonitor):
 
 ```PowerShell
-Install-Module Console-Translate -Repository NuGet
+Install-Module PowerShell.HardwareMonitor -Repository NuGet
 ```
 
 💡 You must have a NuGet repository registered:
