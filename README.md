@@ -488,7 +488,7 @@ Process configuring **temperature sensor monitoring**.
 
 - Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x
 
-Define the server on which the time series database will be installed (it can be Windows, WSL or a virtual machine).
+# Define the server on which the time series database will be installed. It can be Windows or Linux (WSL or a virtual machine).
 
 Install to Windows:
 
@@ -508,11 +508,11 @@ systemctl start influxdb
 systemctl status influxdb
 ```
 
-- Creat background process to send sensors to the database.
+- Start background process to constant send sensors to the database.
 
 > 💡 Administrator rights are required for CIM (default) and Library (raw version)
 
-When installing the module, it includes a template script to send data to InfluxDB and to start and stop the background process. Pre-configure the script and check the database for data availability.
+Pre-configure the script and check the database for data availability (script is located in the directory with the module).
 
 Change the script `Write-Database.ps1` for local or remote data collection (select the data source using the module parameters):
 
@@ -538,20 +538,18 @@ while ($True) {
 }
 ```
 
-**Run a background process** to send sensors to the database with a specified timeout (`Process-Start.ps1`):
+**Run a background process** to send sensors to the database:
 
 ```PowerShell
-$Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
-$proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -Verb RunAs -WindowStyle Hidden -PassThru).id
-$proc_id > "$Path\process_id.txt"
+> Start-SensorToInfluxDB
+> Test-SensorToInfluxDB
 ```
 
-We commit the id of the process when it is created to a temporary file so that it can be **stopped** (`Process-Stop.ps1`):
+We commit the id of the process when it is created to a temporary file so that it can be **stopped**:
 
 ```PowerShell
-$Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
-$proc_id = Get-Content "$path\process_id.txt"
-Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
+> Stop-SensorToInfluxDB
+> Test-SensorToInfluxDB
 ```
 
 - Check the received data using [InfluxDB Studio](https://github.com/CymaticLabs/InfluxDBStudio)
