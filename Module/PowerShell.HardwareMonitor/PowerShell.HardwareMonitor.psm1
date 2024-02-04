@@ -134,6 +134,8 @@ function Send-TemperatureToInfluxDB {
     }
     .LINK
     https://github.com/Lifailon/PowerShellHardwareMonitor
+    https://github.com/openhardwaremonitor/openhardwaremonitor
+    https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
     #>
     param (
         [Parameter(Mandatory,ValueFromPipeline)]$Data,
@@ -166,5 +168,44 @@ function Send-TemperatureToInfluxDB {
         elseif ($LogWriteFile) {
             $LogText | Out-File $LogPath -Append
         }
+    }
+}
+
+function Start-SensorToInfluxDB {
+    param (
+        $Path
+    )
+    if ($null -eq $Path) {
+        $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+    }
+    $proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -Verb RunAs -WindowStyle Hidden -PassThru).id
+    $proc_id > "$Path\process_id.txt"
+}
+
+function Stop-SensorToInfluxDB {
+    param (
+        $Path
+    )
+    if ($null -eq $Path) {
+        $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+    }
+    $proc_id = Get-Content "$path\process_id.txt"
+    Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
+}
+
+function Test-SensorToInfluxDB {
+    param (
+        $Path
+    )
+    if ($null -eq $Path) {
+        $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+    }
+    $proc_id = Get-Content "$path\process_id.txt"
+    $proc_test = Get-Process -id $proc_id -ErrorAction Ignore
+    if ($null -ne $proc_test) {
+        Write-Host $true
+    }
+    else {
+        Write-Host $false
     }
 }

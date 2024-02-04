@@ -1,4 +1,4 @@
-# PowerShellHardwareMonitor
+# PowerShell.HardwareMonitor
 
 Module for local and remote data acquisition temperature, load and other sensors system via [OpenHardwareMonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) and [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) to output PowerShell console.
 
@@ -17,7 +17,7 @@ This module implements an out-of-the-box and universal solution for configuring 
 
 ## 🚀 Install
 
-💡 Dependencies:
+### 💡 Dependencies
 
 - [PowerShell Core](https://github.com/PowerShell/PowerShell)
 
@@ -29,13 +29,29 @@ Set the data retrieval source of your choice with a single cmdlet in your PowerS
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-OpenHardwareMonitor.ps1")
 ```
 
+or
+
 - Install **LibreHardwareMonitor** from the [GitHub repository](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor):
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
 ```
 
-- Quickly **install or update the module and scripts** for creat background process send sensors to the database
+### Module
+
+Install module from [NuGet repository](https://www.nuget.org/packages/PowerShell.HardwareMonitor):
+
+```PowerShell
+Install-Module Console-Translate -Repository NuGet
+```
+
+💡 You must have a NuGet repository registered:
+
+```PowerShell
+Register-PSRepository -Name "NuGet" -SourceLocation "https://www.nuget.org/api/v2" -InstallationPolicy Trusted
+```
+
+- Or use the script to install the module from the GitHub repository:
 
 ```PowerShell
 Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-PowerShellHardwareMonitor.ps1")
@@ -44,15 +60,16 @@ Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubus
 Import the module and get a list of available commands:
 
 ```PowerShell
-Import-Module PowerShellHardwareMonitor
+Import-Module PowerShell.HardwareMonitor
+Get-Command -Module PowerShell.HardwareMonitor
 
-Get-Command -Module PowerShellHardwareMonitor | Select-Object Name,Source
-
-Name                       Source
-----                       ------
-Get-Sensor                 PowerShellHardwareMonitor
-Send-TemperatureToInfluxDB PowerShellHardwareMonitor
-```
+CommandType     Name                            Version    Source
+-----------     ----                            -------    ------
+Function        Get-Sensor                      0.3        PowerShell.HardwareMonitor
+Function        Send-TemperatureToInfluxDB      0.3        PowerShell.HardwareMonitor
+Function        Start-SensorToInfluxDB          0.3        PowerShell.HardwareMonitor
+Function        Stop-SensorToInfluxDB           0.3        PowerShell.HardwareMonitor
+Function        Test-SensorToInfluxDB           0.3        PowerShell.HardwareMonitor
 
 ## 📑 Data
 
