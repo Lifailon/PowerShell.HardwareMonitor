@@ -28,7 +28,7 @@ Set the data retrieval source of your choice with a single cmdlet in your PowerS
 - Install **OpenHardwareMonitor** from [website](https://openhardwaremonitor.org/):
 
 ```PowerShell
-Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-OpenHardwareMonitor.ps1")
+Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell.HardwareMonitor/rsa/Install/Install-OpenHardwareMonitor.ps1")
 ```
 
 or
@@ -36,7 +36,7 @@ or
 - Install **LibreHardwareMonitor** from the [GitHub repository](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor):
 
 ```PowerShell
-Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
+Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell.HardwareMonitor/rsa/Install/Install-LibreHardwareMonitor.ps1")
 ```
 
 ### 📥 Module
@@ -56,7 +56,7 @@ Register-PSRepository -Name "NuGet" -SourceLocation "https://www.nuget.org/api/v
 - Or use the script to install the module from the GitHub repository:
 
 ```PowerShell
-Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShellHardwareMonitor/rsa/Install/Install-PowerShellHardwareMonitor.ps1")
+Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell.HardwareMonitor/rsa/Install/Install-PowerShell.HardwareMonitor.ps1")
 ```
 
 Import the module and get a list of available commands:
@@ -556,7 +556,7 @@ We commit the id of the process when it is created to a temporary file so that i
 
 In the example, the critical processor temperature is 99 degrees for the last 2 hours:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Data.jpg)
+![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/InfluxDB-Data.jpg)
 
 ## 📈 Grafana
 
@@ -576,19 +576,19 @@ systemctl status grafana-server
 
 The example shows the very same indicator that we have recorded in the database:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard.jpg)
+![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/Grafana-Dashboard.jpg)
 
 For simple setting (without using variables or regular expressions), use grouping by host and hardware name tags and filters by sensor name:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/InfluxDB-Query.jpg)
+![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/InfluxDB-Query.jpg)
 
 For clarity and convenience, customize the celsius data type and legends (displaying minimum, maximum, and average readings for the specified time period):
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Legend-Celsius.jpg)
+![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/Grafana-Legend-Celsius.jpg)
 
 Monitoring two hosts:
 
-![Image alt](https://github.com/Lifailon/PowerShellHardwareMonitor/blob/rsa/Screen/Grafana-Dashboard-Group.jpg)
+![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/Grafana-Dashboard-Group.jpg)
 
 ## Deployment
 
