@@ -41,10 +41,10 @@ Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubus
 
 ### 📥 Module
 
-Install module from [NuGet repository](https://www.nuget.org/packages/PowerShell.HardwareMonitor):
+Install module from [NuGet repository](https://www.nuget.org/packages/HardwareMonitor):
 
 ```PowerShell
-Install-Module PowerShell.HardwareMonitor -Repository NuGet
+Install-Module HardwareMonitor -Repository NuGet
 ```
 
 💡 You must have a NuGet repository registered:
@@ -62,16 +62,16 @@ Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubus
 Import the module and get a list of available commands:
 
 ```PowerShell
-Import-Module PowerShell.HardwareMonitor
-Get-Command -Module PowerShell.HardwareMonitor
+Import-Module HardwareMonitor
+Get-Command -Module HardwareMonitor
 
 CommandType     Name                            Version    Source
 -----------     ----                            -------    ------
-Function        Get-Sensor                      0.3        PowerShell.HardwareMonitor
-Function        Send-TemperatureToInfluxDB      0.3        PowerShell.HardwareMonitor
-Function        Start-SensorToInfluxDB          0.3        PowerShell.HardwareMonitor
-Function        Stop-SensorToInfluxDB           0.3        PowerShell.HardwareMonitor
-Function        Test-SensorToInfluxDB           0.3        PowerShell.HardwareMonitor
+Function        Get-Sensor                      0.3        HardwareMonitor
+Function        Send-TemperatureToInfluxDB      0.3        HardwareMonitor
+Function        Start-SensorToInfluxDB          0.3        HardwareMonitor
+Function        Stop-SensorToInfluxDB           0.3        HardwareMonitor
+Function        Test-SensorToInfluxDB           0.3        HardwareMonitor
 
 ## 📑 Data
 
