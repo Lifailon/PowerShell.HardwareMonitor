@@ -534,7 +534,7 @@ while ($True) {
 }
 ```
 
-**Run a background process** (`Start-SensorToInfluxDB`) to send sensors to the database and check the status (`Test-SensorToInfluxDB`):
+**Run a background process** to send sensors to the database and **check the status**:
 
 > 💡 Administrator rights are required for CIM (default) and Library (raw version)
 
