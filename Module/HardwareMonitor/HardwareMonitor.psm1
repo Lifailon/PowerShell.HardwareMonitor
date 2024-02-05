@@ -15,7 +15,7 @@ function Get-Sensor {
     Get-Sensor -Server 192.168.3.99
     Get-Sensor -Server 192.168.3.99 -Port 8086 | Where-Object Value -notmatch "^0,0" | Format-Table
     .LINK
-    https://github.com/Lifailon/PowerShellHardwareMonitor
+    https://github.com/Lifailon/PowerShell.HardwareMonitor
     https://github.com/openhardwaremonitor/openhardwaremonitor
     https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
     #>
@@ -133,7 +133,7 @@ function Send-TemperatureToInfluxDB {
         Start-Sleep -Seconds 5
     }
     .LINK
-    https://github.com/Lifailon/PowerShellHardwareMonitor
+    https://github.com/Lifailon/PowerShell.HardwareMonitor
     https://github.com/openhardwaremonitor/openhardwaremonitor
     https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
     #>
@@ -146,7 +146,7 @@ function Send-TemperatureToInfluxDB {
         [string]$Table        = "HardwareMonitor",
         [switch]$LogConsole,
         [switch]$LogWriteFile,
-        [string]$LogPath      = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor\influxdb.log"
+        [string]$LogPath      = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor\influxdb.log"
     )
     $url = "http://$($ServerInflux):$($Port)/write?db=$Database"
     $TimeZone  = (Get-TimeZone).BaseUtcOffset.TotalMinutes
@@ -176,7 +176,7 @@ function Start-SensorToInfluxDB {
         $Path
     )
     if ($null -eq $Path) {
-        $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+        $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
     }
     $proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -Verb RunAs -WindowStyle Hidden -PassThru).id
     $proc_id > "$Path\process_id.txt"
@@ -187,7 +187,7 @@ function Stop-SensorToInfluxDB {
         $Path
     )
     if ($null -eq $Path) {
-        $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+        $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
     }
     $proc_id = Get-Content "$path\process_id.txt"
     Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
@@ -198,7 +198,7 @@ function Test-SensorToInfluxDB {
         $Path
     )
     if ($null -eq $Path) {
-        $Path = "$(($env:PSModulePath -split ";")[0])\PowerShellHardwareMonitor"
+        $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
     }
     $proc_id = Get-Content "$path\process_id.txt"
     $proc_test = Get-Process -id $proc_id -ErrorAction Ignore

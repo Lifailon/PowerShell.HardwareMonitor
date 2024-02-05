@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>HardwareMonitor</id>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
     <authors>Lifailon</authors>
     <owners>Lifailon</owners>
     <description>Module for local and remote data acquisition temperature, load and other sensors system, for implement monitoring via InfluxDB and Grafana</description>
