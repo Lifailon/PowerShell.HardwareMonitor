@@ -1,11 +1,11 @@
-$path = "$(($env:PSModulePath -split ";")[0])\PowerShell.HardwareMonitor"
+$path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
 if (Test-Path $path) {
     Remove-Item "$path\*" -Force -Recurse
 } else {
     New-Item -ItemType Directory -Path $path
 }
 
-$url = "https://api.github.com/repos/Lifailon/PowerShell.HardwareMonitor/contents/Module/PowerShell.HardwareMonitor"
+$url = "https://api.github.com/repos/Lifailon/PowerShell.HardwareMonitor/contents/Module/HardwareMonitor"
 $Files = Invoke-RestMethod -Uri $url
 foreach ($File in $Files) {
     $File_Name = $File.name
