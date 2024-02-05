@@ -1,4 +1,5 @@
-$path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
+$version = "0.3"
+$path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor\$version"
 if (Test-Path $path) {
     Remove-Item "$path\*" -Force -Recurse
 } else {

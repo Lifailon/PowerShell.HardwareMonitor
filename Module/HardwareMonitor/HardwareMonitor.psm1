@@ -172,34 +172,22 @@ function Send-TemperatureToInfluxDB {
 }
 
 function Start-SensorToInfluxDB {
-    param (
-        $Path
-    )
-    if ($null -eq $Path) {
-        $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
-    }
+    $Version = "0.3"
+    $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor\$Version"
     $proc_id = $(Start-Process pwsh -ArgumentList "-File $Path\Write-Database.ps1" -Verb RunAs -WindowStyle Hidden -PassThru).id
     $proc_id > "$Path\process_id.txt"
 }
 
 function Stop-SensorToInfluxDB {
-    param (
-        $Path
-    )
-    if ($null -eq $Path) {
-        $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
-    }
+    $Version = "0.3"
+    $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor\$Version"
     $proc_id = Get-Content "$path\process_id.txt"
     Start-Process pwsh -ArgumentList "-Command Stop-Process -Id $proc_id" -Verb RunAs
 }
 
 function Test-SensorToInfluxDB {
-    param (
-        $Path
-    )
-    if ($null -eq $Path) {
-        $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor"
-    }
+    $Version = "0.3"
+    $Path = "$(($env:PSModulePath -split ";")[0])\HardwareMonitor\$Version"
     $proc_id = Get-Content "$path\process_id.txt"
     $proc_test = Get-Process -id $proc_id -ErrorAction Ignore
     if ($null -ne $proc_test) {

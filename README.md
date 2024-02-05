@@ -72,7 +72,7 @@ Function        Send-TemperatureToInfluxDB      0.3        HardwareMonitor
 Function        Start-SensorToInfluxDB          0.3        HardwareMonitor
 Function        Stop-SensorToInfluxDB           0.3        HardwareMonitor
 Function        Test-SensorToInfluxDB           0.3        HardwareMonitor
-
+```
 ## 📑 Data
 
 Difference in the amount of data (non-empty) for **HUAWEI MateBook X Pro laptop**.
@@ -488,7 +488,7 @@ Process configuring **temperature sensor monitoring**.
 
 - Install [InfluxDB](https://www.influxdata.com/downloads) version 1.x
 
-# Define the server on which the time series database will be installed. It can be Windows or Linux (WSL or a virtual machine).
+Define the server on which the time series database will be installed. It can be Windows or Linux (WSL or a virtual machine).
 
 Install to Windows:
 
@@ -510,11 +510,7 @@ systemctl status influxdb
 
 - Start background process to constant send sensors to the database.
 
-> 💡 Administrator rights are required for CIM (default) and Library (raw version)
-
-Pre-configure the script and check the database for data availability (script is located in the directory with the module).
-
-Change the script `Write-Database.ps1` for local or remote data collection (select the data source using the module parameters):
+Pre-configure the script `Write-Database.ps1` (script is located in the directory with the module) for local or remote data collection (select the data source using the module parameters) and **check the database for data availability**.
 
 **Local**:
 
@@ -538,7 +534,9 @@ while ($True) {
 }
 ```
 
-**Run a background process** to send sensors to the database:
+**Run a background process** (`Start-SensorToInfluxDB`) to send sensors to the database and check the status (`Test-SensorToInfluxDB`):
+
+> 💡 Administrator rights are required for CIM (default) and Library (raw version)
 
 ```PowerShell
 > Start-SensorToInfluxDB
