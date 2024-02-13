@@ -1,3 +1,4 @@
+# Inport-Module "C:\Users\lifailon\Documents\PowerShell\Modules\HardwareMonitor"
 while ($True) {
     $Server_List = @(
         "192.168.3.100"

@@ -2,16 +2,21 @@
 <package >
   <metadata>
     <id>HardwareMonitor</id>
-    <version>0.3.2</version>
+    <version>0.4.1</version>
     <authors>Lifailon</authors>
     <owners>Lifailon</owners>
     <description>Module for local and remote data acquisition temperature, load and other sensors system, for implement monitoring via InfluxDB and Grafana</description>
     <tags>Windows, PowerShell, Module, Hardware, HardwareMonitor, OpenHardwareMonitor, LibreHardwareMonitor, Monitoring, Sensor, Temperature, InfluxDB, Grafana, dotNET, api</tags>
     <projectUrl>https://github.com/Lifailon/PowerShell.HardwareMonitor</projectUrl>
     <contentFiles>
+      <files include="Service\Install-Service.ps1" buildAction="Content" />
+      <files include="Service\Delete-Service.ps1" buildAction="Content" />
+      <files include="Service\Start-Service.ps1" buildAction="Content" />
+      <files include="Service\Stop-Service.ps1" buildAction="Content" />
+      <files include="Service\Write-SensorToInfluxDB_Local.ps1" buildAction="Content" />
+      <files include="Service\Write-SensorToInfluxDB_Remote.ps1" buildAction="Content" />
       <files include="HardwareMonitor.psm1" buildAction="Content" />
       <files include="HardwareMonitor.psd1" buildAction="Content" />
-      <files include="Write-Database.ps1" buildAction="Content" />
       <files include="README.md" buildAction="Content" />
       <files include="LICENSE" buildAction="Content" />
     </contentFiles>

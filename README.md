@@ -26,8 +26,6 @@ This module implements an out-of-the-box and universal solution for configuring 
 
 ### 💡 Dependencies
 
-- [PowerShell Core](https://github.com/PowerShell/PowerShell)
-
 Set the data retrieval source of your choice with a single cmdlet in your PowerShell console (default installation path: `C:\Users\<UserName>\Documents`).
 
 - Install **OpenHardwareMonitor** from [website](https://openhardwaremonitor.org/):

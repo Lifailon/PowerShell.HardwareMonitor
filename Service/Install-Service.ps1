@@ -5,7 +5,8 @@ function Get-RunAs {
 }
 
 if (!(Get-RunAs)) {
-    $arguments = "-NoExit", "-Command", "& {", $myinvocation.mycommand.definition, "}"
+    $scriptPath = $MyInvocation.MyCommand.Definition
+    $arguments = "-NoExit", "-File `"$scriptPath`""
     Start-Process pwsh -Verb RunAs -ArgumentList $arguments
     Exit
 }
