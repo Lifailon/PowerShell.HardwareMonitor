@@ -302,12 +302,6 @@ ST1000DM003-1CH162     Temperature                   Temperature 0     33  33  3
 WDC WD2005FBYZ-01YCBB2 Temperature                   Temperature 0     36  36  36
 ```
 
-Example:
-
-![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/Data-Temperature.jpg)
-
-The example in the screenshot uses the [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) theme [System-Sensors](https://github.com/Lifailon/oh-my-posh-themes-performance) to retrieve data from LibreHardwareMonitor.
-
 ### Library .NET
 
 💡 To get data from all sensors, you need to run the console with **administrator privileges**.
@@ -454,6 +448,8 @@ $Data | Where-Object {$_.SensorName -match "Package" -and $_.Value -gt 90} | For
 ```
 
 ![Image alt](https://github.com/Lifailon/PowerShell.HardwareMonitor/blob/rsa/Screen/psinfluxdb-data.jpg)
+
+💡 The example in the screenshot uses the [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) theme [System-Sensors](https://github.com/Lifailon/oh-my-posh-themes-performance) to retrieve data from LibreHardwareMonitor.
 
 ## 🔔 Creat service
 
