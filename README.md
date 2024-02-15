@@ -5,6 +5,8 @@
 [![NuGet Version](https://img.shields.io/nuget/v/HardwareMonitor?logo=NuGet&label=NuGet&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FHardwareMonitor)](https://www.nuget.org/packages/HardwareMonitor)
 [![GitHub top language](https://img.shields.io/github/languages/top/Lifailon/PowerShell.HardwareMonitor?logo=PowerShell&link=https%3A%2F%2Fgithub.com%2FPowerShell%2FPowerShell)](https://github.com/PowerShell/PowerShell)
 
+Publication on **Habr** (ru language): [Мониторинг температуры Windows. Создание метрик, настройка InfluxDB и Grafana](https://habr.com/ru/articles/793296/)
+
 Module for local and remote data acquisition temperature, fan speeds, load and other sensors system via [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) and [OpenHardwareMonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) to output PowerShell console.
 
 This module implements an out-of-the-box and universal solution for configuring temperature sensor monitoring with **InfluxDB v1.x** and visualization in **Grafana**.
