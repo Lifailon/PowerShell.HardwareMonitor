@@ -1,7 +1,6 @@
 # PowerShell.HardwareMonitor
 
-[![GitHub Tag](https://img.shields.io/github/v/tag/Lifailon/PowerShell.HardwareMonitor?logo=GitHub&label=GitHub&link=https%3A%2F%2Fgithub.com%2FLifailon%2FPowerShell.HardwareMonitor)
-](https://github.com/Lifailon/PowerShell.HardwareMonitor)
+[![GitHub Tag](https://img.shields.io/github/v/tag/Lifailon/PowerShell.HardwareMonitor?logo=GitHub&label=GitHub&link=https%3A%2F%2Fgithub.com%2FLifailon%2FPowerShell.HardwareMonitor)](https://github.com/Lifailon/PowerShell.HardwareMonitor)
 [![NuGet Version](https://img.shields.io/nuget/v/HardwareMonitor?logo=NuGet&label=NuGet&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FHardwareMonitor)](https://www.nuget.org/packages/HardwareMonitor)
 [![GitHub top language](https://img.shields.io/github/languages/top/Lifailon/PowerShell.HardwareMonitor?logo=PowerShell&link=https%3A%2F%2Fgithub.com%2FPowerShell%2FPowerShell)](https://github.com/PowerShell/PowerShell)
 
